@@ -1,8 +1,8 @@
-# C++ Guide 📚
+# CPP Guide 📚
 
 ### 👋 Welcome!
 
-This repository is meant to be a **guide / quick reference** for C++ developers where I try to get to the point so you can spend more time programming. This guide is **Markdown**, so it is easily opened using **Visual Studio Code** or **Github**. It contains extensive documentation, code examples and best practices.
+The CPP Guide repository is meant to be a **guide / quick reference** for C++ developers where I try to get to the point so you can spend more time programming. This guide is **Markdown**, so it is easily opened using **Visual Studio Code** or **Github**. It contains extensive documentation, code examples and best practices.
 
 ### 📝 A Note on Reading This Guide
 
@@ -41,19 +41,22 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
 
 <td width="33%">
 
-📜 **Strings**
+📜 **Strings & Streams**
 
-- [String Literals](./guide/strings/string_literals.md)
-- [IO Streams](./guide/strings/io_streams.md)
-- [C Style Strings](./guide/strings/c_style_strings.md)
-- [std::string](./guide/strings/std_string.md)
-- [Character Encoding](./guide/strings/character_encoding.md)
-- [std::string_view](./guide/strings/string_view.md)
-- [String Streams](./guide/strings/string_streams.md)
-- [std::format](./guide/strings/std_format.md)
-- [printf](./guide/strings/printf.md)
-- [File IO](./guide/strings/file_io.md)
-- [File Streams](./guide/strings/file_streams.md)
+- Strings
+  - [String Literals](./guide/strings/string_literals.md)
+  - [std::string](./guide/strings/std_string.md)
+  - [Character Encoding](./guide/strings/character_encoding.md)
+  - [C Style Strings](./guide/strings/c_style_strings.md)
+  - [std::string_view](./guide/strings/string_view.md)
+- Streams
+  - [IO Streams](./guide/strings/io_streams.md)
+  - [String Streams](./guide/strings/string_streams.md)
+  - [std::format](./guide/strings/std_format.md)
+  - [printf](./guide/strings/printf.md)
+- Files
+  - [File IO](./guide/strings/file_io.md)
+  - [File Streams](./guide/strings/file_streams.md)
 
 </td>
 
