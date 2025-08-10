@@ -44,10 +44,10 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
 📜 **Strings & Streams**
 
 - Strings
-  - [String Literals](./guide/strings/string_literals.md)
   - [std::string](./guide/strings/std_string.md)
-  - [Character Encoding](./guide/strings/character_encoding.md)
   - [C Style Strings](./guide/strings/c_style_strings.md)
+  - [String Literals](./guide/strings/string_literals.md)
+  - [Character Encoding](./guide/strings/character_encoding.md)
   - [std::string_view](./guide/strings/string_view.md)
 - Streams
   - [IO Streams](./guide/strings/io_streams.md)

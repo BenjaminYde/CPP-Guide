@@ -141,6 +141,46 @@ if (strcmp(str1, str2) == 0) {
 }
 ```
 
+### Find First & Last Occurrence of a character (`strchr` and `strrchr`)
+
+Finds the **first occurrence** of a specific character in a string.
+
+```c++
+const char* email = "expert@example.com";
+const char* at_symbol = strchr(email, '@');
+
+if (at_symbol) {
+    // at_symbol now points to "@example.com"
+    std::cout << "Domain part is: " << (at_symbol + 1) << std::endl;
+}
+```
+
+Finds the **last occurrence** of a specific character in a string. This is very useful for parsing file paths.
+
+```c++
+const char* filePath = "/usr/local/bin/myprogram";
+const char* last_slash = strrchr(filePath, '/');
+
+if (last_slash) {
+    // last_slash now points to "/myprogram"
+    std::cout << "Program name is: " << (last_slash + 1) << std::endl;
+}
+```
+
+### Find First & Last Occurrence of a substring (`strstr`)
+
+Finds the first occurrence of a substring (the "needle") within a larger string (the "haystack").
+
+```c++
+const char* log_entry = "[INFO]: User login successful.";
+const char* result = strstr(log_entry, "login");
+
+if (result) {
+    // result points to "login successful."
+    std::cout << "Log contains a login event." << std::endl;
+}
+```
+
 ## Problems & Limitations
 
 ### 1. Buffer Overflow
