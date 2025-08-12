@@ -55,7 +55,6 @@ Because element declaration should have the same type as the array elements, thi
 In the following for-each example, our element declarations are declared by value:
 
 ```c++
-```cpp
 std::string array[]{ "peter", "likes", "frozen", "yogurt" };
 for (auto element : array) // element will be a copy of the current array element
 {

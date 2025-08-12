@@ -13,7 +13,7 @@ The problem with raw pointers is that a `void (*)(int)` is a completely differen
 The syntax is clean and descriptive:
 `std::function<return_type(parameter_types)>`
 
-```cpp
+```c++
 #include <iostream>
 #include <functional>
 #include <string>
@@ -65,7 +65,7 @@ Let's refactor our old `void*` example into modern, safe C++.
 
 ### The Old, Unsafe Way (for comparison)
 
-```cpp
+```c++
 void on_button_click(void* data) {
     UserData* userData = static_cast<UserData*>(data); // Unsafe cast!
     userData->clickCount++;
@@ -74,7 +74,7 @@ void on_button_click(void* data) {
 
 ### The New, Modern, and Safe Way
 
-```cpp
+```c++
 #include <functional>
 
 struct UserData {
@@ -115,7 +115,7 @@ No casts, no `void*`, no danger. The lambda's capture list `[&myData]` handles e
 
 `std::function` also massively simplifies calling member functions. You no longer need the awkward `.*` or `->*` syntax. You can use a lambda to capture the object instance (`this`).
 
-```cpp
+```c++
 class Wallet {
 public:
     void addMoney(int amount) {

@@ -52,7 +52,7 @@ a = 10; // Error: cannot assign to variable 'a' with const-qualified type 'const
 
 `constexpr` has the requirement that all variables / functions need to be `constexpr`.
 
-```cpp
+```c++
 constexpr double gravity { 9.8 }; // ok: 9.8 is a constant expression
 constexpr int sum { 4 + 5 };      // ok: 4 + 5 is a constant expression
 constexpr int something { sum };  // ok: sum is a constant expression

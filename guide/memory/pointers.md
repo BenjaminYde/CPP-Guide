@@ -141,7 +141,7 @@ The syntax for declaring a function pointer is: `return_type (*pointer_name)(par
 
 Let's look at a simple example:
 
-```cpp
+```c++
 #include <iostream>
 
 // A function we want to point to
@@ -182,7 +182,7 @@ int main() {
 
 A very common mistake is forgetting the parentheses in the declaration.
 
-```cpp
+```c++
 // MISTAKE: This declares a function named 'p_mistake' that takes two ints
 // and returns a pointer to an int (int*).
 // This is NOT a function pointer.
@@ -201,7 +201,7 @@ The most common use for function pointers is creating **callbacks**. You write a
 
 Think of a function that sorts data. It needs to know *how* to compare two elements. You can pass it a comparison function.
 
-```cpp
+```c++
 // Generic function that applies an operation to two numbers
 void applyOperation(int a, int b, int (*operation)(int, int)) {
     int result = operation(a, b);
@@ -226,7 +226,7 @@ Here, `applyOperation` is generic. The logic it executes depends on the function
 
 You can create an array of function pointers to build a *dispatch table*. This is a clean way to select an action based on an index, often from user input or an enum.
 
-```cpp
+```c++
 // Assume 'add', 'subtract', and 'multiply' are defined as before.
 int main() {
     // Create an array of function pointers.
@@ -252,7 +252,7 @@ This pattern is common in C APIs for passing arbitrary "user data" to a callback
 
 ### This is powerful, but dangerous
 
-```cpp
+```c++
 #include <string>
 
 // A struct to hold our "user data"
@@ -303,7 +303,7 @@ The `void*` pattern for user data is completely replaced by lambda captures in m
 
 The raw function pointer syntax is notoriously difficult to read, especially in function parameters. Modern C++ (`C++11` and later) provides the `using` keyword to create a type alias, which dramatically improves readability.
 
-```cpp
+```c++
 // Create an alias named 'ArithmeticFunc' for the complex pointer type
 using ArithmeticFunc = int (*)(int, int);
 
@@ -332,7 +332,7 @@ The syntax is also different and more complex.
   * **Declaration:** `return_type (ClassName::*pointer_name)(params);`
   * **Invocation:** `(object.*pointer_name)(args);` or `(object_ptr->*pointer_name)(args);`
 
-```cpp
+```c++
 class Calculator {
 public:
     int add(int a, int b) { return a + b; }

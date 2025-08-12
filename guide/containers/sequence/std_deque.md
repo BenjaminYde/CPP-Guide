@@ -46,7 +46,7 @@ Its elements are not stored in one single contiguous block of memory. Instead it
 - `std::vector`: `O(1)` at the end. `O(n)` at the beginning or in the middle.
 - `std::list`: `O(1)` anywhere, provided you already have an iterator to the position.
 
-```cpp
+```c++
 #include <iostream>
 #include <deque>
 
@@ -77,7 +77,7 @@ The primary use case is when you genuinely need a queue-like structure that must
 **Example: A Task Scheduler**
 Imagine a scheduler that adds high-priority tasks to the front and normal-priority tasks to the back.
 
-```cpp
+```c++
 std::deque<Task> tasks;
 
 void add_urgent_task(const Task& t) {
@@ -99,7 +99,7 @@ Task get_next_task() {
 
 This is a more subtle but powerful feature. If you need to hold pointers to elements in a container while adding new elements *to the ends*, `std::deque` is one of the only containers that guarantees those pointers will remain valid.
 
-```cpp
+```c++
 #include <deque>
 #include <iostream>
 

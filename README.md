@@ -18,30 +18,7 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
 <tr valign="top">
 <td width="33%">
 
-🛠️ **CMake & Tooling**
-
-- Compilation Process
-  - [Compilation Process](./guide/tools/compilation/compilation_process.md)
-  - [Compiler Overview](./guide/tools/compilation/compilers.md)
-  - [Build Generators](./guide/tools/compilation/build_generators.md)
-  - [Dependency Management](./guide/tools/compilation/dependency_management.md)
-  - [ABI (Application Binary Interface)](./guide/tools/compilation/abi.md)
-- CMake
-  - [Introduction](./guide/tools/cmake/introduction.md)
-  - [Generators](./guide/tools/cmake/generators.md)
-  - [Variables](./guide/tools/cmake/variables.md)
-  - [Targets](./guide/tools/cmake/targets.md)
-  - [Presets](./guide/tools/cmake/cmakepresets.md)
-  - Macros and Functions (todo)
-  - [Best Practices](./guide/tools/cmake/best_practices.md)
-- Tooling
-  - [Common Tools](./guide/tools/clang/tooling.md)
-  - [H and CPP Files](./guide/oop/h_and_cpp_files.md)
-</td>
-
-<td width="33%">
-
-📜 **Strings & Streams**
+📜 **Strings, Streams & Files**
 
 - Strings
   - [std::string](./guide/strings/std_string.md)
@@ -83,10 +60,29 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
   - [std::unordered_map](./guide/containers/unordered_associative/std_unordered_map.md)
   - [std::unordered_multiset](./guide/containers/unordered_associative/std_unordered_multiset.md)
   - [std::unordered_multimap](./guide/containers/unordered_associative/std_unordered_multimap.md)
-- Other
+- Other Important Containers
   - [std::span](./guide/containers/std_span.md)
   - [Container Adaptors](./guide/containers/container_adaptors.md)
 </td>
+
+<td width="33%">
+
+🧠 **Memory Management**
+
+- [References](./guide/memory/references.md)
+- [Pointers](./guide/memory/pointers.md)
+- [Smart Pointers](./guide/memory/smart_pointers.md)
+- [How To Use Smart Pointers With Functions](./guide/memory/smart_pointers_in_functions.md)
+- [Shallow Copy vs Deep Copy](./guide/memory/shallow_copy_vs_deep_copy.md)
+
+
+🎭 **Functions**
+
+- [Function Pointers](./guide/functions/function_pointers.md)
+- [Lambdas](./guide/functions/lambdas.md)
+- [std::function](./guide/functions/std_function.md)
+</td>
+
 </tr>
 </table>
 
@@ -146,28 +142,43 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
 </tr>
 </table>
 
+🛠️ **C++ Compilation, CMake & Tooling**
 <table width="100%" style="border: none;">
 <tr valign="top">
-<td width="33%">
+<td width="25%" style="padding-bottom: 20px;">
 
-🧠 **Memory Management**
-
-- [References](./guide/memory/references.md)
-- [Pointers](./guide/memory/pointers.md)
-- [Smart Pointers](./guide/memory/smart_pointers.md)
-- [How To Use Smart Pointers With Functions](./guide/memory/smart_pointers_in_functions.md)
-- [Shallow Copy vs Deep Copy](./guide/memory/shallow_copy_vs_deep_copy.md)
+**Compilation Process**
+- [Compilation Process](./guide/tools/compilation/compilation_process.md)
+- [Compiler Overview](./guide/tools/compilation/compilers.md)
+- [Build Generators](./guide/tools/compilation/build_generators.md)
+- [Dependency Management](./guide/tools/compilation/dependency_management.md)
+- [ABI (Application Binary Interface)](./guide/tools/compilation/abi.md)
 </td>
 
-<td width="33%">
+<td width="25%" style="padding-bottom: 20px;">
 
-🎭 **Functions**
-
-- [Function Pointers](./guide/functions/function_pointers.md)
-- [Lambdas](./guide/functions/lambdas.md)
-- [std::function](./guide/functions/std_function.md)
+**CMake**
+- [Introduction](./guide/tools/cmake/introduction.md)
+- [Generators](./guide/tools/cmake/generators.md)
+- [Variables](./guide/tools/cmake/variables.md)
+- [Targets](./guide/tools/cmake/targets.md)
+- [Presets](./guide/tools/cmake/cmakepresets.md)
+- Macros and Functions (todo)
+- [Best Practices](./guide/tools/cmake/best_practices.md)
 </td>
 
+<td width="25%" style="padding-bottom: 20px;">
+
+**Tooling**
+- [Common Tools](./guide/tools/clang/tooling.md)
+- [H and CPP Files](./guide/oop/h_and_cpp_files.md)
+</td>
+</tr>
+</table>
+
+
+<table width="100%" style="border: none;">
+<tr valign="top">
 <td width="33%">
 
 🔗 **Typing, Casting & ConstExpr**
@@ -181,9 +192,7 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
 - [Using constexpr](./guide/typing/using_constexpr.md)
 - [Using constval](./guide/typing/using_constval.md)
 </td>
-</tr>
 
-<tr valign="top">
 <td width="33%">
 
 ⚡ **Concurrency**
@@ -194,7 +203,6 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
   - [std::async and std::future](./guide/concurrency/stl_threads/async_and_future.md)
 - [POSIX vs STL Threads](./guide/concurrency/posix_vs_stl_threads.md)
 </td>
-
 <td width="33%">
 
 🎨 **Design Patterns & Idioms**
@@ -203,18 +211,14 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
   - [RAII](./guide/design_patterns/raii.md)
   - [PIMPL](./guide/design_patterns/pimpl.md)
 </td>
-
-<td width="33%">
+</tr>
+</table>
 
 🚧 **Todo**
 
 - Design patterns
 - Templates
 - Error handling
-
-</td>
-</tr>
-</table>
 
 ## 📍 References
 

@@ -29,7 +29,7 @@ Project structure:
 
 `main.cpp`:
 
-```cpp
+```c++
 #include "MyLib.h"
 #include <iostream>
 
@@ -41,7 +41,7 @@ int main() {
 
 `MyLib.cpp:`
 
-```cpp
+```c++
 #include "MyLib.h"
 
 int add(int a, int b) {
@@ -51,7 +51,7 @@ int add(int a, int b) {
 
 `MyLib.h`:
 
-```cpp
+```c++
 #ifndef MYLIB_H
 #define MYLIB_H
 
