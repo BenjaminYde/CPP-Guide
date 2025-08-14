@@ -35,28 +35,37 @@ RUN apt -qq update && \
     apt -qq remove && \
     apt -qq autoremove
 
-# Install CMAKE
-ENV CMAKE_VERSION 3.31.2
-RUN apt update && \
-    apt -qq install -y --no-install-recommends \
-        graphviz \
-    && \
+# Install CMake
+ENV CMAKE_VERSION 3.31.8
+RUN \
+    # Install CMake
     cd /tmp && \
     wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-linux-x86_64.tar.gz && \
     tar -xzvf cmake-${CMAKE_VERSION}-linux-x86_64.tar.gz && \
     mv cmake-${CMAKE_VERSION}-linux-x86_64 /opt/cmake && \
-    rm cmake-${CMAKE_VERSION}-linux-x86_64.tar.gz
+    rm cmake-${CMAKE_VERSION}-linux-x86_64.tar.gz && \
+    # Install CMake Tools
+    apt update && \
+    apt -qq install -y --no-install-recommends \
+        graphviz \
+    && \
+    # cleanup
+    apt -qq clean && \
+    apt -qq autoclean && \
+    apt -qq remove && \
+    apt -qq autoremove -y && \
+    rm -rf /var/lib/apt/lists
 ENV PATH="/opt/cmake/bin:${PATH}"
 
 # Download and install Clang binaries
-ENV CLANG_VERSION 19.1.5
-RUN cd /tmp && \
+ENV CLANG_VERSION 20.1.8
+RUN \
+    # Download
+    cd /tmp && \
     curl -L -O https://github.com/llvm/llvm-project/releases/download/llvmorg-${CLANG_VERSION}/LLVM-${CLANG_VERSION}-Linux-X64.tar.xz && \
     tar -xJvf LLVM-${CLANG_VERSION}-Linux-X64.tar.xz && \
-    rm LLVM-${CLANG_VERSION}-Linux-X64.tar.xz
-
-# Install Clang
-RUN cd /tmp && \
+    rm LLVM-${CLANG_VERSION}-Linux-X64.tar.xz && \
+    # Install
     mkdir /opt/LLVM-${CLANG_VERSION} && \
     mv LLVM-${CLANG_VERSION}-Linux-X64/* /opt/LLVM-${CLANG_VERSION}
 ENV PATH="/opt/LLVM-${CLANG_VERSION}/bin:${PATH}"

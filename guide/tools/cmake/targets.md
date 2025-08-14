@@ -13,7 +13,7 @@ project(MyProject
 # set compiler configurations
 set(CMAKE_C_COMPILER clang)
 set(CMAKE_CXX_COMPILER clang++)
-set(CMAKE_CXX_COMPILER_VERSION 19.1.5)
+set(CMAKE_CXX_COMPILER_VERSION 20.1.8)
 
 # enforce modern C++ standards
 set(CMAKE_CXX_STANDARD 23)

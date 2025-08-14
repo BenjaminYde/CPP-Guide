@@ -2,6 +2,9 @@
 
 In C++, when your class manages a resource like a file handle or a network socket, you become **responsible for its entire lifecycle**. The "Rule of Five" is a guideline that ensures you handle this responsibility correctly. It states that if you need to implement any of the **five special member functions**, you should probably implement all of them to guarantee your class **behaves predictably and safely**.
 
+> [!TIP]
+> Make sure to checkout the runnable code examples: `code_examples/oop/rule_of_five` here!
+
 ## Why is This Rule Necessary?
 
 Understanding pointers requires a grasp of how memory is organized. The two primary regions are the **stack** and the **heap**:

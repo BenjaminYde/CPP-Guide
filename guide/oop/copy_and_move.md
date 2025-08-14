@@ -1,4 +1,4 @@
-# Move and Copy
+# Copy and Move Semantics
 
 In C++, the way we transfer the value of an object from one instance to another is fundamental to writing correct and efficient code. This is governed by two complementary mechanisms: copy semantics (making a deep, independent duplicate) and move semantics (efficiently transferring resource ownership). A deep understanding of both is essential for mastering resource management under the RAII paradigm.
 

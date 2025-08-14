@@ -75,7 +75,6 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
 - [How To Use Smart Pointers With Functions](./guide/memory/smart_pointers_in_functions.md)
 - [Shallow Copy vs Deep Copy](./guide/memory/shallow_copy_vs_deep_copy.md)
 
-
 🎭 **Functions**
 
 - [Function Pointers](./guide/functions/function_pointers.md)
@@ -97,7 +96,7 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
 - [Classes vs Structs](./guide/oop/classes_vs_structs.md)
 - [Constructors](./guide/oop/constructors.md)
 - [Destructors](./guide/oop/destructors.md)
-- [Move and Copy](./guide/oop/move_and_copy.md)
+- [Copy and Move Semantics](./guide/oop/copy_and_move.md)
 - [Default and Delete](./guide/oop/default_delete.md)
 - [Rule of Five](./guide/oop/rule_of_five.md)
 - [Static](./guide/oop/static.md)
@@ -131,7 +130,7 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
 
 **Virtual Functions**
 
-- [Introduction](./guide/oop/virtual_functions/virtual_functions.md)
+- [Introduction](./guide/oop/virtual_functions/introduction.md)
 - [Override and Final Specifier](./guide/oop/virtual_functions/override_and_final_specifier.md)
 - [Covariant Return Types](./guide/oop/virtual_functions/covariant_return_types.md)
 - [Destructors](./guide/oop/virtual_functions/destructors.md)
