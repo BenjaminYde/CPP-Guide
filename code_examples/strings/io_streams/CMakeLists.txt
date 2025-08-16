@@ -9,5 +9,5 @@ project(Examples.Concurrency
         LANGUAGES "CXX")
 
 # create target
-set(TARGET rule_of_five)
+set(TARGET io_streams)
 add_executable(${TARGET} src/main.cpp)

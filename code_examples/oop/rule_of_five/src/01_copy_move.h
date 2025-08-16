@@ -99,7 +99,7 @@ private:
     // Question: Which assignment operator is called here? Copy or Move? Why?
     void exercise_2_3()
     {
-        std::cout << "\n🚀 Exercise 2.3 ---\n";
+        std::cout << "\n🚀 Exercise 2.3\n";
         Tracer t5("t5");
         t5 = createTracer("temp");
     }
@@ -107,7 +107,7 @@ private:
     // Question: What happens at lines // A and // B? Which constructor is used in each push_back call and why?
     void exercise_3_1()
     {
-        std::cout << "\n🚀 Exercise 3.1 ---\n";
+        std::cout << "\n🚀 Exercise 3.1\n";
         std::vector<Tracer> vec;
         Tracer t1("t1");
 

@@ -6,7 +6,7 @@ The CPP Guide repository is meant to be a **guide / quick reference** for C++ de
 
 ### 📝 A Note on Reading This Guide
 
-Before you dive in, it's important to understand that this guide is **structured by topic**, not by difficulty. There is **no prescribed "beginner to advanced" path**. Feel free to jump to any section that is relevant to your needs. A developer needing to understand `std::vector` can go straight there, while another might need to brush up on "RAII" or "CMake Presets."
+Before you dive in, it's important to understand that this guide is **structured by topic, not by difficulty**. There is **no prescribed "beginner to advanced" path**. Feel free to jump to any section that is relevant to your needs. A developer needing to understand `std::vector` can go straight there, while another might need to brush up on "RAII" or "CMake Presets."
 
 ### 🚀 Execute Code Examples 
 
@@ -85,7 +85,7 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
 </tr>
 </table>
 
-🏛️ **Object Oriented Programming OOP**
+🏛️ **Object Oriented Programming (OOP)**
 
 <table width="100%" style="border: none;">
 <tr valign="top">
