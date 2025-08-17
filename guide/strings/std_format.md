@@ -1,4 +1,4 @@
-# The Modern C++ Formatting Library: `std::format`
+# `std::format`: The Modern C++ Formatting Library (C++20)
 
 `std::format` is a feature introduced in C++20 that provides a type-safe and extensible way to format text. It's designed to be a safer, more robust replacement for older C-style formatting functions like `printf` and C++ stream-based formatting. The `std::format` function resides in the `<format>` header.
 

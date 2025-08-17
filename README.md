@@ -25,12 +25,13 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
   - [C Style Strings](./guide/strings/c_style_strings.md)
   - [String Literals](./guide/strings/string_literals.md)
   - [Character Encoding](./guide/strings/character_encoding.md)
-  - [std::string_view](./guide/strings/string_view.md)
+  - [std::string_view](./guide/strings/string_view.md) (C++17)
 - Streams
   - [IO Streams](./guide/strings/io_streams.md)
   - [String Streams](./guide/strings/string_streams.md)
-  - [std::format](./guide/strings/std_format.md)
-  - [printf](./guide/strings/printf.md)
+  - [std::printf](./guide/strings/printf.md) (C++11)
+  - [std::format ](./guide/strings/std_format.md) (C++20)
+  - [std::print](./guide/strings/printf.md) (C++23)
 - Files
   - [File IO](./guide/strings/file_io.md)
   - [File Streams](./guide/strings/file_streams.md)
@@ -60,7 +61,7 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
   - [std::unordered_multiset](./guide/containers/unordered_associative/std_unordered_multiset.md)
   - [std::unordered_multimap](./guide/containers/unordered_associative/std_unordered_multimap.md)
 - Other Important Containers
-  - [std::span](./guide/containers/std_span.md)
+  - [std::span](./guide/containers/std_span.md) (C++20)
   - [Container Adaptors](./guide/containers/container_adaptors.md)
 </td>
 

@@ -1,4 +1,4 @@
-# printf: Formatted Output
+# `std::printf`: Formatted Output (C++11)
 
 The `printf` function is a powerful and versatile tool for producing formatted output. Originating from the C standard library, it is available in C++ via the `<cstdio>` header. While modern C++ offers alternatives like iostreams (`std::cout`) and `std::format`, `printf` remains prevalent in many codebases due to its efficiency, control, and long history.
 
