@@ -34,7 +34,6 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
 - Files
   - [File IO](./guide/strings/file_io.md)
   - [File Streams](./guide/strings/file_streams.md)
-
 </td>
 
 <td width="33%">
