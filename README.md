@@ -99,6 +99,7 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
 - [Copy and Move Semantics](./guide/oop/copy_and_move.md)
 - [Default and Delete](./guide/oop/default_delete.md)
 - [Rule of Five](./guide/oop/rule_of_five.md)
+- [Rule of Zero](./guide/oop/rule_of_zero.md)
 - [Static](./guide/oop/static.md)
 - [Friend](./guide/oop/friend.md)
 - [Nesting Classes](./guide/oop/nesting_classes.md)

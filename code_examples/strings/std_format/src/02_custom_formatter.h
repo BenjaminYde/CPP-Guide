@@ -21,7 +21,6 @@ struct std::formatter<Point> : std::formatter<std::string> {
         {
             return std::format_to(ctx.out(), "({}, {})", p.x, p.y);
         }
-
     }
 };
 

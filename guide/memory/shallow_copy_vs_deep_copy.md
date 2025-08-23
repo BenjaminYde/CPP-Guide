@@ -1,102 +1,210 @@
-## Shallow copy
+# Shallow Copy vs Deep Copy
 
-Because C++ does not know much about your class, the default copy constructor and default assignment operators it provides use a copying method known as a memberwise copy (also known as a **shallow copy**). This means that C++ copies each member of the class individually (using the assignment operator for overloaded operator=, and direct initialization for the copy constructor). 
+When you create a copy of an object in C++, the compiler needs to know how to perform that copy. For simple objects, this is straightforward. But when your objects manage resources, like dynamically allocated memory, the concept of "copying" becomes more complex. This is where the distinction between a shallow and a deep copy becomes one of the most critical concepts for writing safe and correct C++ code.
+
+> [!TIP]
+> Make sure to checkout the runnable code examples: `code_examples/memory`!
+
+## The Default Behavior: Shallow Copy
+
+When you don't provide your own copy logic, the compiler generates a default copy constructor and a default copy assignment operator for you. These perform a memberwise copy, also known as a shallow copy.
 
 When classes are simple (e.g. do not contain any dynamically allocated memory), this works very well. A shallow copy means creating a new object that shares the same memory location or references as the original object. In the context of C++, a shallow copy typically involves copying the member values of one object to another, without allocating separate memory for any pointer members. This means that the pointer members of the new object will point to the same memory location as the pointer members of the original object.
 
 Shallow copying is the default behavior of the copy constructor and assignment operator if you do not provide your own implementation.
 
-### Deep Copy
+This leads to two catastrophic problems:
 
-A deep copy means creating a new object that has its own copy of the data of the original object. In the context of C++, a deep copy involves not only copying the values of the members of the original object to the new object, but also allocating separate memory for the pointer members of the new object and copying the data pointed to by the original object. This means that the pointer members of the new object will point to new memory locations.
+- Changes to the data through one object's pointer will be reflected in the other object, which is usually not what you want.
+- When the objects are destroyed, both will try to delete the same memory, leading to a double-free error and undefined behavior (usually a crash).
 
-### Example
+### Bad Practice: The Double-Free Disaster
 
-Let's consider a simple example to illustrate the difference between shallow copy and deep copy.
+Let's illustrate this with a naïve String class that manages a raw C-style string.
 
 ```c++
 #include <iostream>
+#include <cstring> // For strlen and strcpy
 
-class MyClass {
+class NaiveString {
 public:
-    int *data;
+    char* m_data;
+    size_t m_size;
 
-    MyClass(int val) {
-        data = new int;
-        *data = val;
+    NaiveString(const char* initial_data) {
+        std::cout << "Constructor called for '" << initial_data << "'\n";
+        m_size = std::strlen(initial_data) + 1; // +1 for null terminator
+        m_data = new char[m_size];
+        std::strcpy(m_data, initial_data);
     }
 
-    // Shallow copy constructor
-    MyClass(const MyClass &obj) : data(obj.data) {
-        std::cout << "Shallow copy constructor called" << std::endl;
-    }
-
-    // Deep copy constructor
-    // MyClass(const MyClass &obj) {
-    //     data = new int;
-    //     *data = *obj.data;
-    //     std::cout << "Deep copy constructor called" << std::endl;
+    // The compiler will generate a default shallow copy constructor like this:
+    // NaiveString(const NaiveString& other)
+    //     : m_data(other.m_data), m_size(other.m_size) {
+    //     std::cout << "Shallow copy constructor called.\n";
     // }
 
-    ~MyClass() {
-        delete data;
+    ~NaiveString() {
+        std::cout << "Destructor called for '" << m_data << "'\n";
+        delete[] m_data;
+    }
+
+    void print() const {
+        std::cout << m_data << std::endl;
     }
 };
 
 int main() {
-    MyClass obj1(10);
-    MyClass obj2 = obj1;  // Calls the copy constructor
+    NaiveString str1("Hello");
+    std::cout << "Copying str1 to str2...\n";
+    NaiveString str2 = str1; // (Shallow) copy constructor is invoked here
 
-    std::cout << "obj1 data: " << *obj1.data << std::endl;
-    std::cout << "obj2 data: " << *obj2.data << std::endl;
+    std::cout << "str1: "; str1.print();
+    std::cout << "str2: "; str2.print();
 
-    *obj1.data = 20;
-
-    std::cout << "obj1 data: " << *obj1.data << std::endl;
-    std::cout << "obj2 data: " << *obj2.data << std::endl;
-
-    return 0;
+    // Now, let's change str2 and see what happens to str1
+    str2.m_data[0] = 'J';
+    std::cout << "\nAfter modifying str2:\n";
+    std::cout << "str1: "; str1.print(); // Surprise! str1 is also changed.
+    std::cout << "str2: "; str2.print();
+    
+    std::cout << "\nExiting main. Destructors will be called.\n";
+    return 0; // CRASH! Both destructors try to delete the same m_data.
 }
-
 ```
 
-In this example, the `MyClass` class has a pointer member `data`. The `MyClass` class has a copy constructor that performs a shallow copy of the `data` member. Therefore, when the `obj2` object is created as a copy of the `obj1` object, the `data` member of `obj2` will point to the same memory location as the `data` member of `obj1`.
+When you run this, you will see `str1` change when `str2` is modified. Worse, the program will crash at the end because both `str1` and `str2`'s destructors will attempt to `delete[]` the same memory address.
 
-As a result, modifying the `data` member of `obj1` will also modify the `data` member of `obj2`, and vice versa.
-### Problems with Shallow Copy
+Output:
+```
+Constructor called for 'Hello'
+Copying str1 to str2...
+str1: Hello
+str2: Hello
 
-Using shallow copy can lead to problems in some situations. For example, in the above example, when the `obj1` and `obj2` objects are destroyed, their destructors will both try to delete the same memory location, which leads to undefined behavior.
-### When to Use Deep Copy
+After modifying str2:
+str1: Jello
+str2: Jello
 
-In general, you should use deep copy when your class has pointer members that own the memory they point to. This ensures that each object has its own copy of the data and prevents problems like double deletion of memory.
-### Implementing Deep Copy
+Exiting main. Destructors will be called.
+Destructor called for 'Jello'
+Destructor called for 'L�g:'
+free(): double free detected in tcache 2
+[1]    3398 IOT instruction (core dumped)
+```
 
-To implement deep copy, you need to provide your own implementation of the copy constructor and assignment operator that allocates separate memory for the pointer members of the new object and copies the data pointed to by the original object.
+### Deep Copy & The Rule of Three
 
-In the above example, you can uncomment the deep copy constructor and comment the shallow copy constructor to see how the deep copy works.
-### Classes in the Standard Library
+To fix this, we must perform a deep copy. A deep copy involves:
 
-The C++ standard library provides a wide range of classes and functions, including those for dealing with dynamic memory, such as `std::string` and `std::vector`.
+- Allocating new memory for the copy.
+- Copying the contents from the original memory block to the new one.
+
+**The Rule of Three**: If a class requires a user-defined destructor, a user-defined copy constructor, or a user-defined copy assignment operator, it almost certainly requires all three.
+
+Our `NaiveString` has a destructor, so it needs the other two.
+
+### Good Practice: Implementing the Rule of Three
+
+Let's create a `BetterString` class that correctly implements deep copy.
 
 ```c++
 #include <iostream>
-#include <vector>
+#include <cstring>
+
+class BetterString {
+public:
+    char* m_data;
+    size_t m_size;
+
+    BetterString(const char* initial_data) {
+        std::cout << "Constructor called for '" << initial_data << "'\n";
+        m_size = std::strlen(initial_data) + 1;
+        m_data = new char[m_size];
+        std::strcpy(m_data, initial_data);
+    }
+
+    // 1. Destructor (we already have this)
+    ~BetterString() {
+        std::cout << "Destructor called for '" << m_data << "'\n";
+        delete[] m_data;
+    }
+
+    // 2. Deep Copy Constructor
+    BetterString(const BetterString& other) {
+        std::cout << "Deep copy constructor called.\n";
+        m_size = other.m_size;
+        m_data = new char[m_size]; // Allocate new memory
+        std::strcpy(m_data, other.m_data); // Copy the data
+    }
+
+    // 3. Deep Copy Assignment Operator
+    BetterString& operator=(const BetterString& other) {
+        std::cout << "Deep copy assignment called.\n";
+        // Protect against self-assignment (e.g., str1 = str1)
+        if (this == &other) {
+            return *this;
+        }
+
+        // Free the old memory
+        delete[] m_data;
+
+        // Allocate new memory and copy the data
+        m_size = other.m_size;
+        m_data = new char[m_size];
+        std::strcpy(m_data, other.m_data);
+
+        return *this;
+    }
+
+    void print() const {
+        std::cout << m_data << std::endl;
+    }
+};
 
 int main() {
-    std::vector<int> vec1 = {1, 2, 3};
-    std::vector<int> vec2 = vec1;  // Calls the copy constructor
+    BetterString str1("Hello");
+    BetterString str2 = str1; // Calls deep copy constructor
 
-    vec1[0] = 10;
+    std::cout << "str1: "; str1.print();
+    std::cout << "str2: "; str2.print();
 
-    std::cout << "vec1: " << vec1[0] << " " << vec1[1] << " " << vec1[2] << std::endl;
-    std::cout << "vec2: " << vec2[0] << " " << vec2[1] << " " << vec2[2] << std::endl;
-
-    return 0;
+    // Now, let's change str2 and see what happens to str1
+    str2.m_data[0] = 'J';
+    std::cout << "\nAfter modifying str2:\n";
+    std::cout << "str1: "; str1.print(); // str1 is unchanged!
+    std::cout << "str2: "; str2.print();
+    
+    std::cout << "\nExiting main. Destructors will be called.\n";
+    return 0; // No crash! Each object manages its own memory.
 }
 ```
 
 Output:
-```c++
-vec1: 10 2 3
-vec2: 1 2 3
 ```
+Constructor called for 'Hello'
+Deep copy constructor called.
+str1: Hello
+str2: Hello
+
+After modifying str2:
+str1: Hello
+str2: Jello
+
+Exiting main. Destructors will be called.
+Destructor called for 'Jello'
+Destructor called for 'Hello'
+```
+
+This version works correctly. Modifying the copy doesn't affect the original, and there is no double-free crash.
+
+## Rule of Zero
+
+Manually managing memory with new and delete and writing the "Rule of Three" members is tedious and error-prone. Modern C++ provides a much better way, embodied by the **Rule of Zero**.
+
+**The Rule of Zero**: A class should not have to define any of the special member functions (destructor, copy/move constructors, copy/move assignment operators) if it manages its resources using other classes that already follow the Rule of Three/Five (e.g., RAII types).
+
+Instead of raw pointers, use resource-managing classes from the standard library like `std::string`, `std::vector`, or smart pointers like `std::unique_ptr` and `std::shared_ptr`. These classes already handle their own memory correctly. The compiler-generated shallow copy then works perfectly, because "copying" a `std::string` or `std::vector` member automatically performs a deep copy of its contents.
+
+> [!TIP]
+> Read more about the Rule of Zero on a the dedicated page [here](../oop/rule_of_zero.md).
