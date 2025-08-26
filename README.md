@@ -89,7 +89,7 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
 
 <table width="100%" style="border: none;">
 <tr valign="top">
-<td width="25%" style="padding-bottom: 20px;">
+<td width="33%" style="padding-bottom: 20px;">
 
 **General**
 
@@ -101,22 +101,13 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
 - [Rule of Five](./guide/oop/rule_of_five.md)
 - [Rule of Zero](./guide/oop/rule_of_zero.md)
 - [Static](./guide/oop/static.md)
+- [Operator Overloading](./guide/oop/operator_overloading.md)
 - [Friend](./guide/oop/friend.md)
 - [Nesting Classes](./guide/oop/nesting_classes.md)
 - [Object Relationships](./guide/oop/object_relationships.md)
 </td>
 
-<td width="25%" style="padding-bottom: 20px;">
-
-**Operator Overloading**
-
-- [Introduction](./guide/oop/operator_overloading/introduction.md)
-- [Friend, Member and Normal Function Overloading](./guide/oop/operator_overloading/friend_vs_member_vs_normal_function_overloading.md)
-- [In and Out operators](./guide/oop/operator_overloading/in_and_out_operators.md)
-- [Assignment Operator](./guide/oop/operator_overloading/assignment_operator.md)
-</td>
-
-<td width="25%" style="padding-bottom: 20px;">
+<td width="33%" style="padding-bottom: 20px;">
 
 **Inheritance**
 
@@ -127,7 +118,7 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
 - [Hiding Functionality](./guide/oop/inheritance/hiding_functionality.md)
 </td>
 
-<td width="25%" style="padding-bottom: 20px;">
+<td width="33%" style="padding-bottom: 20px;">
 
 **Virtual Functions**
 
@@ -145,7 +136,7 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
 🛠️ **C++ Compilation, CMake & Tooling**
 <table width="100%" style="border: none;">
 <tr valign="top">
-<td width="25%" style="padding-bottom: 20px;">
+<td width="33%" style="padding-bottom: 20px;">
 
 **Compilation Process**
 - [Compilation Process](./guide/tools/compilation/compilation_process.md)
@@ -155,7 +146,7 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
 - [ABI (Application Binary Interface)](./guide/tools/compilation/abi.md)
 </td>
 
-<td width="25%" style="padding-bottom: 20px;">
+<td width="33%" style="padding-bottom: 20px;">
 
 **CMake**
 - [Introduction](./guide/tools/cmake/introduction.md)
@@ -167,7 +158,7 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
 - [Best Practices](./guide/tools/cmake/best_practices.md)
 </td>
 
-<td width="25%" style="padding-bottom: 20px;">
+<td width="33%" style="padding-bottom: 20px;">
 
 **Tooling**
 - [Common Tools](./guide/tools/clang/tooling.md)
