@@ -31,7 +31,7 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
   - [String Streams](./guide/strings/string_streams.md)
   - [std::printf](./guide/strings/printf.md) (C++11)
   - [std::format ](./guide/strings/std_format.md) (C++20)
-  - [std::print](./guide/strings/printf.md) (C++23)
+  - [std::print](./guide/strings/print.md) (C++23)
 - Files
   - [File IO](./guide/strings/file_io.md)
   - [File Streams](./guide/strings/file_streams.md)
