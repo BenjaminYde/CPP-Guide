@@ -21,14 +21,23 @@ Standard variables exist only during the current configuration process. They are
 Examples:
 
 - `CMAKE_CXX_STANDARD`: Specifies the C++ standard (e.g., 17, 20).
+- `CMAKE_CXX_STANDARD_REQUIRED`: This makes the standard you just set a strict requirement. If this is ON, CMake will stop with an error if the compiler doesn't support C++20. If you left this `OFF` (or didn't set it), CMake would try C++17, but if it wasn't available, it might silently fall back to an older standard (like C++11), which is usually not what you want.
+- `CMAKE_CXX_EXTENSIONS`: This disables compiler-specific extensions to the C++ standard. Many compilers (like GCC and Clang) add their own non-standard features, which are enabled by default. Setting this to `OFF` ensures CMake uses the flag for the pure, official standard. This makes your code more portable and helps you avoid relying on non-standard features by mistake.
 - `CMAKE_BUILD_TYPE`: Determines the build type (e.g., Debug, Release, RelWithDebInfo).
 - `CMAKE_INSTALL_PREFIX`: Defines the directory where files will be installed.
 
 Usage:
 
 ```cmake
-set(CMAKE_CXX_STANDARD 20)  # Use C++20
-set(CMAKE_BUILD_TYPE Release)  # Optimize for release builds
+# set compiler configurations
+set(CMAKE_C_COMPILER clang)
+set(CMAKE_CXX_COMPILER clang++)
+set(CMAKE_CXX_COMPILER_VERSION 20.1.8)
+
+# enforce modern C++ standards
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 ```
 
 #### User-defined variables
@@ -77,7 +86,7 @@ or
 
 Command-line usage:
 
-```cmake
+```sh
 cmake -DMY_CACHE_VAR=custom_value ..
 ```
 

@@ -25,12 +25,11 @@ add_executable(MyApp
     src/main.cpp)
 
 # add include directory
-include_directories(include)
+target_include_directories(MyApp PRIVATE include)
 
 # add library
 add_library(MyLib 
-    src/MyLib.cpp 
-    src/MyLibHelper.cpp)
+    src/MyLib.cpp)
 
 # link library to executable
 target_link_libraries(MyApp PRIVATE MyLib)
@@ -49,7 +48,7 @@ Created using `add_executable()`.
 
 For example, define an executable target from specified source files:
 
-```sh
+```cmake
 add_executable(MyApp main.cpp)
 ```
 
@@ -59,7 +58,7 @@ Created using `add_library()`.
 
 For example, create a library target, which can be static, shared, or module:
 
-```sh
+```cmake
 add_library(MyLib STATIC lib.cpp)
 ```
 
@@ -69,7 +68,7 @@ Defines a target that performs custom commands, which is always considered out-o
 
 Created using `add_custom_target()` for custom build actions.
 
-```sh
+```cmake
 add_custom_target(run_tests
     COMMAND ${CMAKE_COMMAND} -E echo "Running tests..."
     COMMAND ${CMAKE_COMMAND} -E touch run_tests.stamp
@@ -79,11 +78,67 @@ add_custom_target(run_tests
 
 ## Target Commands (overview)
 
-### 1. `target_sources()`
+### `set_target_properties()`
+
+Instead of setting global properties for all targets, you can set properties for the targets instead:
+
+Global:
+
+```cmake
+# It affects all targets below it, and doesn't propagate.
+set(CMAKE_CXX_STANDARD 17)
+add_definitions(-DMY_DEFINE)
+include_directories(include)
+
+add_executable(App1 "app1.cpp") # Gets C++17, -DMY_DEFINE, include
+add_executable(App2 "app2.cpp") # Also gets C++17, -DMY_DEFINE, include
+```
+
+Target based:
+
+```cmake
+# app 1
+add_executable(App1 "app1.cpp")
+set_target_properties(App1 PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+)
+target_compile_definitions(App1 PRIVATE "MY_DEFINE")
+target_include_directories(App1 PRIVATE include)
+
+# app 2
+add_executable(App2 "app2.cpp") # Is completely unaffected by App1's properties
+```
+
+### `get_target_properties()`
+
+Retrieves the value of a property from a target and stores it in a CMake variable.
+
+```cmake
+add_library(MyLib lib.cpp)
+set_target_properties(MyLib PROPERTIES CXX_STANDARD 17)
+
+# ... later in the script ...
+get_target_property(MyLibStandard MyLib CXX_STANDARD)
+message(STATUS "MyLib C++ Standard is: ${MyLibStandard}")
+```
+
+You can also set multiple properties at once:
+
+```cmake
+add_library(MyLib lib.cpp)
+set_target_properties(MyLib PROPERTIES
+    OUTPUT_NAME "MyAwesomeLib"
+    CXX_STANDARD 17
+    POSITION_INDEPENDENT_CODE TRUE
+)
+```
+
+### `target_sources()`
 
 Associates source files with a target, allowing for dynamic source file specification.
 
-```sh
+```cmake
 add_library(MyLib STATIC)
 target_sources(MyLib
     PRIVATE
@@ -93,11 +148,11 @@ target_sources(MyLib
 )
 ```
 
-### 2. `target_include_directories()`
+### `target_include_directories()`
 
 Sets include directories for a target, specifying where the compiler should look for header files.
 
-```sh
+```cmake
 add_library(MyLib STATIC lib.cpp)
 target_include_directories(MyLib
     PUBLIC
@@ -107,22 +162,60 @@ target_include_directories(MyLib
 )
 ```
 
-This command specifies that the compiler should search for headers in `${CMAKE_SOURCE_DIR}/`include when compiling MyLib and in `${CMAKE_SOURCE_DIR}/src` only for the target itself.
+This command specifies that the compiler should search for headers in `${CMAKE_SOURCE_DIR}/include` when compiling `MyLib` and in `${CMAKE_SOURCE_DIR}/src` only for the target itself.
 
-### 3. `target_link_libraries()`
+### `target_link_libraries()`
 
 Specifies libraries that a target depends on.
 
-```sh
+```cmake
 add_executable(MyApp main.cpp)
 target_link_libraries(MyApp PRIVATE MyLib)
 ```
 
-### 4. `target_compile_definitions()`
+### `target_link_directories()`
+
+Adds directories where the linker should search for libraries (e.g., using the `-L` flag).
+
+```cmake
+add_executable(MyApp main.cpp)
+target_link_directories(MyApp
+    PRIVATE
+        /opt/custom/lib
+)
+target_link_libraries(MyApp PRIVATE some_custom_lib)
+```
+
+This tells the linker to search in `/opt/custom/lib` to find `libsome_custom_lib.a` (or `.so`). 
+
+> [!Warning]
+> In the example above you see there there is no target for the custom library so it is not really a modern approach. Modern practice prefers linking to IMPORTED targets, which already know their own paths. See the example below.
+
+```cmake
+add_executable(MyApp main.cpp)
+
+# For example searching for something like "/opt/custom/lib/libsome_custom_lib.so"
+find_library(
+    CUSTOM_LIB_LIBRARY     
+    NAMES "some_custom_lib"
+    PATHS /opt/custom/lib
+)
+
+add_library(Custom::Lib SHARED IMPORTED)
+
+set_target_properties(Custom::Lib PROPERTIES
+    IMPORTED_LOCATION "${CUSTOM_LIB_LIBRARY}"
+    INTERFACE_INCLUDE_DIRECTORIES "/opt/custom/include"
+)
+
+target_link_libraries(MyApp PRIVATE Custom::Lib)
+```
+
+### `target_compile_definitions()`
 
 Adds preprocessor definitions to a target, which can be used to conditionally compile code.
 
-```sh
+```cmake
 add_library(MyLib STATIC lib.cpp)
 target_compile_definitions(MyLib
     PRIVATE
@@ -134,11 +227,11 @@ target_compile_definitions(MyLib
 
 This defines `MYLIB_INTERNAL` for the compilation of `MyLib` and `MYLIB_API` for both `MyLib` and any targets that link against it.
 
-### 5. `target_compile_options()`
+### `target_compile_options()`
 
 Specifies additional compiler options for a target.
 
-```sh
+```cmake
 add_executable(MyApp main.cpp)
 target_compile_options(MyApp
     PRIVATE
@@ -147,13 +240,18 @@ target_compile_options(MyApp
 )
 ```
 
-This adds the `-Wall` and `-Wextra` compiler flags when compiling MyApp.
+This adds the `-Wall` and `-Wextra` compiler flags when compiling MyApp.        
+Find more docs here about compiler flags for Clang:
+- https://clang.llvm.org/docs/ClangCommandLineReference.html
+- https://clang.llvm.org/docs/DiagnosticsReference.html
 
-### 6. `add_dependencies()`
+You can also do this: `man clang++` or `clang++ --help`​
+
+### `add_dependencies()`
 
 Specifies that a target depends on other targets, ensuring the dependent targets are built first.
 
-```sh
+```cmake
 add_executable(MyApp main.cpp)
 add_custom_target(generate_code
     COMMAND ${CMAKE_COMMAND} -E echo "Generating code..."
@@ -161,4 +259,4 @@ add_custom_target(generate_code
 add_dependencies(MyApp generate_code)
 ```
 
-Here, `MyApp` depends on generate_code, so the generate_code target will be built before MyApp.
+Here, `MyApp` depends on generate_code, so the generate_code target will be built before `MyApp`.

@@ -12,7 +12,7 @@ cmake -S . -B build
 
 Specify the minimum required version in `CMakeLists.txt` to ensure compatibility:
 
-```sh
+```cmake
 cmake_minimum_required(VERSION 3.31)
 ```
 
@@ -20,7 +20,7 @@ cmake_minimum_required(VERSION 3.31)
 
 Avoid manual inclusion of files or libraries; use targets instead. For example:
 
-```sh
+```cmake
 target_include_directories(MyTarget PRIVATE include/)
 ```
 
@@ -31,7 +31,7 @@ Commands like `include_directories()` apply to all targets and can introduce uni
 
 Always separate Debug and Release builds to avoid conflicts:
 
-```
+```sh
 cmake -S . -B build-debug -DCMAKE_BUILD_TYPE=Debug
 cmake -S . -B build-release -DCMAKE_BUILD_TYPE=Release
 ```

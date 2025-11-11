@@ -18,7 +18,7 @@ Let’s consider a simple project that consists of a main program and a library:
 
 Project structure: 
 
-```yml
+```
 /MyProject
 ├── src
 │   ├── main.cpp
@@ -159,6 +159,10 @@ Command to build your cmake project:
 cmake --build <build_dir> --target <target> --config <config>
 ```
 
+- `--build` specifies the build directory.
+- `--target` specifies the target you want to build.
+- `--config` what config do you want to build. (Debug/Release)
+
 Example:
 
 ```sh
@@ -169,17 +173,16 @@ cmake --build build --target MyApp --config Release
 
 Project Folder Structure:
 
-```yml
+```
 /MyProject
-├── CMakeLists.txt
-├── include
-│   └── MyLib
-│       └── MyLib.h
-├── src
+├── src/
 │   ├── main.cpp
 │   ├── MyLib.cpp
-│   ├── MyLibHelper.cpp
-└── build (created after configuration)
+├── include/
+│   └── MyLib/
+│       └── MyLib.h
+├── CMakeLists.txt
+└── build/ (created after configuration)
 ```
 
 `CMakeLists.txt`:
@@ -205,12 +208,11 @@ add_executable(MyApp
     src/main.cpp)
 
 # add include directory
-include_directories(include)
+target_include_directories(MyApp PRIVATE include)
 
 # add library
 add_library(MyLib 
-    src/MyLib.cpp 
-    src/MyLibHelper.cpp)
+    src/MyLib.cpp)
 
 # link library to executable
 target_link_libraries(MyApp PRIVATE MyLib)
