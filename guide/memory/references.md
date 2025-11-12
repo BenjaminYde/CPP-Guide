@@ -38,7 +38,6 @@ Once a reference is bound to an object, it cannot be changed to refer to a diffe
 int num1 = 10;
 int num2 = 20;
 int &refNum = num1;
-
 refNum = num2;  // This does NOT make refNum refer to num2.
                 // It assigns the VALUE of num2 to num1.
                 // num1 is now 20.
@@ -51,7 +50,6 @@ You do not need a special operator to access the value of the object a reference
 ```c++
 int value = 5;
 int &refValue = value;
-
 refValue = 15;  // Modifies 'value' directly
 std::cout << value << std::endl; // Output: 15
 ```
@@ -119,7 +117,7 @@ Buffer b3 = std::move(b1); // Calls move constructor (std::move casts b1 to an r
 Buffer b4 = Buffer();      // Calls move constructor (Buffer() is a temporary rvalue)
 ```
 
-## Other Use Cases and 
+## Other Use Cases 
 
 ### Range-Based for Loops
 
