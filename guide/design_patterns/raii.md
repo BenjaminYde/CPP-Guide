@@ -168,7 +168,7 @@ void bad() {
 }
 ```
 
-### Good (RAII with `std::lock_guard`):
+### Good (RAII with `std::lock_guard`): (C++11)
 
 - `std::lock_guard` is a RAII wrapper for a mutex.  
 - **Locks in constructor**, **unlocks in destructor**.  
@@ -181,9 +181,26 @@ void bad() {
 std::mutex m;
 
 void good() {
-    std::lock_guard<std::mutex> lock(m);  // Acquire in constructor
+    std::lock_guard<std::mutex> lock(m); // Acquire in constructor
     if (!everything_ok()) {
         return; // No problem! Destructor unlocks
     }
 }  // Unlocked here automatically
+```
+
+### Good (RAII with `std::lock_guard`): (C++17)
+
+`std::scoped_lock` is the C++17 implementation of `std::lock_guard` which is also RAII and can hold up to multiple mutexes instead of only one.
+
+```c++
+#include <mutex>
+
+std::mutex m;
+
+void good() {
+    std::scoped_lock lock(m); //Acquire in constructor
+    if (!everything_ok()) {
+        return; // Safe! Auto-unlock
+    }
+}  // Unlocked automatically
 ```
