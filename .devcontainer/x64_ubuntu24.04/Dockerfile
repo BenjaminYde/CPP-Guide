@@ -3,33 +3,37 @@ FROM ubuntu:24.04
 # Development APT packages
 RUN apt -qq update && \
     apt -qq install -y --no-install-recommends \
+        # general
         apt-utils \
-        autoconf \
-        automake \
-        bash-completion \    
+        lsb-release \
+        # general
+        apt-utils \
+        lsb-release \
+        # building
         build-essential \
-        ca-certificates \
-        curl \
-        dos2unix \
-        g++ \
-        gcc \
-        gdb \
-        git \
-        locales-all \
-        make \
+        software-properties-common \
         ninja-build \
-        python-is-python3 \
-        python3 \
-        python3-dev \
-        python3-pip \
-        rsync \
-        ssh \
+        # git
+        git \
+        git-lfs \
+        # permissions
         sudo \
-        tar \
-        unzip \
+        gnupg \
+        ca-certificates \
+        # networking & remote
+        curl \
         wget \
-        zip \
+        ssh \
+        openssh-client \
+        wget \
+        xdg-utils \
+        # terminal
+        bash-completion \
+        nano \
+        locales-all \
+        zsh \
         && \
+    # cleanup
     apt -qq clean && \
     apt -qq autoclean && \
     apt -qq remove && \
@@ -57,18 +61,57 @@ RUN \
     rm -rf /var/lib/apt/lists
 ENV PATH="/opt/cmake/bin:${PATH}"
 
-# Download and install Clang binaries
-ENV CLANG_VERSION 20.1.8
+# Install Clang APT Packages
+# Checkout the website: https://llvm.org/
+# Checkout the website: https://apt.llvm.org/
+# Checkout the website: https://apt.llvm.org/noble/pool/main/l/llvm-toolchain-20/
+ENV CLANG_MAJOR_VERSION="20"
 RUN \
-    # Download
-    cd /tmp && \
-    curl -L -O https://github.com/llvm/llvm-project/releases/download/llvmorg-${CLANG_VERSION}/LLVM-${CLANG_VERSION}-Linux-X64.tar.xz && \
-    tar -xJvf LLVM-${CLANG_VERSION}-Linux-X64.tar.xz && \
-    rm LLVM-${CLANG_VERSION}-Linux-X64.tar.xz && \
-    # Install
-    mkdir /opt/LLVM-${CLANG_VERSION} && \
-    mv LLVM-${CLANG_VERSION}-Linux-X64/* /opt/LLVM-${CLANG_VERSION}
-ENV PATH="/opt/LLVM-${CLANG_VERSION}/bin:${PATH}"
+    # Download and add the official LLVM GPG key
+    wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
+    # # Add the LLVM repository
+    echo "deb http://apt.llvm.org/$(lsb_release -sc)/ llvm-toolchain-$(lsb_release -sc)-${CLANG_MAJOR_VERSION} main" > /etc/apt/sources.list.d/llvm-${CLANG_MAJOR_VERSION}.list && \
+    # Install APT packages
+    # - clang-XX: The C/C++ compiler
+    # - lld-XX: The fast linker
+    # - libc++-XX-dev: The C++ standard library headers
+    # - libc++abi-XX-dev: The C++ ABI library headers
+    apt update && apt install -y --no-install-recommends \
+        clang-${CLANG_MAJOR_VERSION} \
+        lld-${CLANG_MAJOR_VERSION} \
+        libc++-${CLANG_MAJOR_VERSION}-dev \
+        libc++abi-${CLANG_MAJOR_VERSION}-dev \
+        clang-tools-${CLANG_MAJOR_VERSION} \
+        clang-${CLANG_MAJOR_VERSION}-doc \
+        libclang-common-${CLANG_MAJOR_VERSION}-dev \
+        libclang-${CLANG_MAJOR_VERSION}-dev \
+        clang-format-${CLANG_MAJOR_VERSION}  \
+        libclang1-${CLANG_MAJOR_VERSION} \
+        clangd-${CLANG_MAJOR_VERSION} \
+        clang-tidy-${CLANG_MAJOR_VERSION} \
+    && \
+    # Create symlinks so you can just run `clang++`
+    ln -s /usr/bin/clang-${CLANG_MAJOR_VERSION} /usr/bin/clang && \
+    ln -s /usr/bin/clang++-${CLANG_MAJOR_VERSION} /usr/bin/clang++ && \
+    # cleanup
+    apt -qq clean && \
+    apt -qq autoclean && \
+    apt -qq remove && \
+    apt -qq autoremove -y && \
+    rm -rf /var/lib/apt/lists
+    
+# Download and install Clang binaries
+#ENV CLANG_VERSION 20.1.8
+#RUN \
+#    # Download
+#    cd /tmp && \
+#    curl -L -O https://github.com/llvm/llvm-project/releases/download/llvmorg-${CLANG_VERSION}/LLVM-${CLANG_VERSION}-Linux-X64.tar.xz && \
+#    tar -xJvf LLVM-${CLANG_VERSION}-Linux-X64.tar.xz && \
+#    rm LLVM-${CLANG_VERSION}-Linux-X64.tar.xz && \
+#    # Install
+#    mkdir /opt/LLVM-${CLANG_VERSION} && \
+#    mv LLVM-${CLANG_VERSION}-Linux-X64/* /opt/LLVM-${CLANG_VERSION}
+#ENV PATH="/opt/LLVM-${CLANG_VERSION}/bin:${PATH}"
 
 # Install VCPKG
 #RUN apt update && \
