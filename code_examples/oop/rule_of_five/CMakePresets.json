@@ -48,5 +48,12 @@
         "CMAKE_CXX_EXTENSIONS": "OFF"
       }
     }
+  ],
+    "buildPresets": [
+    {
+      "name": "linux-clang-debug",
+      "configurePreset": "linux-clang-debug",
+      "targets": ["MyTarget"]
+    }
   ]
 }

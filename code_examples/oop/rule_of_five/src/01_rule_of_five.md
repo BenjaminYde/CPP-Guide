@@ -1,4 +1,4 @@
-# 01 Copy Move Awnsers
+# Awnsers
 
 ## The Basics of Copying
 
@@ -7,7 +7,7 @@
 ```
 🚀 Exercise 1.1
   t1: Constructor
-  t1: COPY CONSTRUCTOR from t1
+  t1: COPY Constructor from t1
 ...end of scope
   t1: Destructor
   t1: Destructor
@@ -21,7 +21,7 @@ The line `Tracer t2 = t1;` is an initialization, not an assignment. Since `t2` i
 🚀 Exercise 1.2
   t1: Constructor
   t2: Constructor
-  t2: COPY ASSIGNMENT from t1
+  t2: COPY Assignment from t1
 ...end of scope
   t1: Destructor
   t1: Destructor
@@ -50,22 +50,23 @@ Instead of creating a `Tracer` object inside `createTracer`, then move-construct
 If RVO were disabled, you would see this:
 
 ```
-🚀 Exercise 2.1 (No RVO)
-  temp: Constructor
-  temp: MOVE CONSTRUCTOR from temp
-...end of scope
-  temp: Destructor
+🚀 Exercise 2.2
+  t1: Constructor
+  t1: MOVE Constructor from t1
+State of t1: name = 't1 [moved]'
+  t1: Destructor
+  t1 [moved]: Destructor
 ```
 
 ### `exercise_2_2`
 
 ```
-🚀 Exercise 2.2
-  t1: Constructor
-  t1: MOVE CONSTRUCTOR (into a new object)
-State of t1: name = ''
-  t1: Destructor // This is t4 being destroyed. It holds the name "t1".
-  : Destructor   // This is the original t1 being destroyed. It is now empty.
+🚀 Exercise 2.3
+  t5: Constructor
+  temp: Constructor
+  t5: MOVE Assignment from temp
+  temp [moved]: Destructor
+  temp: Destructor
 ```
 
 - `std::move(t1)`: This is a cast. It tells the compiler to treat the lvalue `t1` as if it were a temporary (an rvalue). It signals, "I am done with `t1`, its resources can be stolen." (move contstructor)
@@ -75,11 +76,18 @@ State of t1: name = ''
 ### `exercise_2_3`
 
 ```
-🚀 Exercise 2.3 ---
-  t5: Constructor
+🚀 Exercise 3.1
+  t1: Constructor
+Pushing back t1 (lvalue)...
+  t1: COPY Constructor from t1
+Pushing back temporary (rvalue)...
   temp: Constructor
-  t5: MOVE ASSIGNMENT from temp
-  : Destructor
+  temp: MOVE Constructor from temp
+  t1: MOVE Constructor from t1
+  t1 [moved]: Destructor
+  temp [moved]: Destructor
+  t1: Destructor
+  t1: Destructor
   temp: Destructor
 ```
 
@@ -90,16 +98,16 @@ State of t1: name = ''
 ### `exercise_3_1`
 
 ```
-🚀 Exercise 3.1 ---
+🚀 Exercise 3.1
   t1: Constructor
 Pushing back t1 (lvalue)...
-  t1: COPY CONSTRUCTOR from t1
+  t1: COPY Constructor from t1
 Pushing back temporary (rvalue)...
   temp: Constructor
-  temp: MOVE CONSTRUCTOR (into a new object)
-  t1: MOVE CONSTRUCTOR (into a new object)
-  : Destructor
-  : Destructor
+  temp: MOVE Constructor from temp
+  t1: MOVE Constructor from t1
+  t1 [moved]: Destructor
+  temp [moved]: Destructor
   t1: Destructor
   t1: Destructor
   temp: Destructor
@@ -121,3 +129,60 @@ This exercise demonstrates how std::vector uses both copy and move semantics, an
         - This is where the line you asked about comes from! The vector calls the move constructor to move the {"`t1`"} object from the old location to the new one because moving is faster than copying.
         - Output: `t1`:` MOVE CONSTRUCTOR (into a new object)`
               
+
+### `exercise_4_1`
+
+```
+🚀 Exercise 4.1
+  temp: Constructor
+...end
+  temp: Destructor
+```
+
+Zero.
+Even though the function returns by value, C++17+ mandatory copy elision (previously NRVO) constructs the object directly in the caller’s storage. No copy or move constructor is called — not even the move one.
+
+### `exercise_5_1`
+
+```
+🚀 Exercise 5.1
+  Alice: Constructor
+  Bob: Constructor
+Before move: a = Alice, b = Bob
+  Alice: MOVE Assignment from Bob
+After move:  a = Bob, b = Bob [moved]
+  Bob [moved]: Destructor
+  Bob: Destructor
+```
+
+The move assignment operator (`operator=(Tracer&&)`) is called.
+`a`’s previously owned resource is deleted first, then `a` steals `b`’s pointer. `b` is left in a valid but moved-from state (`resource == nullptr`).
+
+### `exercise_6_1`
+
+```
+🚀 Exercise 6.1
+Adding 4 elements...
+  v0: Constructor
+  v1: Constructor
+  v2: Constructor
+  v3: Constructor
+Forcing reallocation...
+  v4: Constructor
+  v0: MOVE Constructor from v0
+  v0 [moved]: Destructor
+  v1: MOVE Constructor from v1
+  v1 [moved]: Destructor
+  v2: MOVE Constructor from v2
+  v2 [moved]: Destructor
+  v3: MOVE Constructor from v3
+  v3 [moved]: Destructor
+  v0: Destructor
+  v1: Destructor
+  v2: Destructor
+  v3: Destructor
+  v4: Destructor
+```
+
+Existing elements are move-constructed into the new buffer (never copied if a `noexcept` move constructor exists).
+If the move constructor is not `noexcept`, the vector falls back to copy construction for strong exception safety. This is why real resource-managing types must declare move operations `noexcept`.

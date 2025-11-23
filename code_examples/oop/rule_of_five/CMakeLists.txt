@@ -5,9 +5,8 @@ cmake_minimum_required(VERSION 3.31 FATAL_ERROR)
 include(FetchContent)
 
 # project
-project(Examples.Concurrency
-        LANGUAGES "CXX")
+project(RuleOfFive)
 
 # create target
-set(TARGET rule_of_five)
+set(TARGET MyTarget)
 add_executable(${TARGET} src/main.cpp)
