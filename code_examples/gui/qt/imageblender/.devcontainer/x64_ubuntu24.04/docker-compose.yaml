@@ -1,0 +1,11 @@
+services:
+  devcontainer:
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    build:
+      context: ../..
+      dockerfile: .devcontainer/x64_ubuntu24.04/Dockerfile
+    user: developer
+    volumes:
+      # workspace
+      - ../..:/home/developer/cppguide_examples_qt_imageblender
