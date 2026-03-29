@@ -10,7 +10,7 @@ The journey starts with writing C++ source files (`.cpp`) and their correspondin
 
 ### 2. Preprocessing
 
-Before the actual compilation begins, the preprocessor steps in to handle directives like `#include` and `#define`. It essentially expands the source code by inserting the contents of included files directly into the `.cpp` file. The result of this step is a fully expanded source file, often referred to as a **translation unit**, typically saved with a `.i` or `.ii` extension.The output is modified source code, free of preprocessor directives,
+Before the actual compilation begins, the preprocessor steps in to handle directives like `#include` and `#define`. It essentially expands the source code by inserting the contents of included files directly into the `.cpp` file. The result of this step is a fully expanded source file, often referred to as a **translation unit**, typically saved with a `.i` or `.ii` extension. The output is modified source code, free of preprocessor directives.
 
 ### 3. Compiling
 
@@ -79,8 +79,6 @@ int area = PI * SQUARE(5); // Expands to: int area = 3.14159 * ((5) * (5));
 
 Conditional compilation directives (`#ifdef`, `#ifndef`, `#if`, `#elif`, `#else`, `#endif`) allow you to selectively include or exclude blocks of code during preprocessing. This is incredibly useful for:
 
-This is incredibly useful for:
-
 - **Platform-Specific Code**: Adapting code for different operating systems or architectures.
 - **Debugging/Tracing**: Enabling or disabling debug-specific code sections.
 - **Feature Flags**: Including or excluding optional features at compile time.
@@ -111,8 +109,8 @@ Common preprocessor directives:
 - `#include`: Incorporates the contents of a file.
 - `#define`: Defines macros for constants or functions.
 - `#undef`: Undefines a macro.
-- `#ifdef`, #ifndef, #endif: Allow conditional compilation based on whether macros are defined.
-- `#pragma`: Direct compiler-specific behaviors, such as warnings or optimizations​
+- `#ifdef`, `#ifndef`, `#endif`: Allow conditional compilation based on whether macros are defined.
+- `#pragma`: Direct compiler-specific behaviors, such as warnings or optimizations.
 
 #### 4. Comment & Whitespace Removal
 
@@ -170,6 +168,54 @@ Alternatively, use `#pragma once` if supported by your compiler:
 constexpr double PI = 3.14159; // Instead of #define PI 3.14159
 inline int square(int x) { return x * x; } // Instead of #define SQUARE(x) ((x) * (x))
 ```
+
+#### 5. Consider C++20 (and C++23) Modules
+
+Modules replace the traditional `#include` model. Instead of the preprocessor copying and pasting header text thousands of times across translation units, modules are compiled once into a binary format (a Built Module Interface, or BMI). They eliminate the need for header guards entirely and prevent macro leakage — macros defined inside a module do not affect the importing translation unit.
+
+**The problem with `#include`:**
+```c++
+// Including heavy headers in your header file pollutes the translation unit
+// of anyone who includes your header, increasing compile times.
+#pragma once
+#include <vector>
+#include <string>
+#include <windows.h> // Disastrous: leaks thousands of macros like 'min' and 'max'
+
+struct UserData {
+    std::vector<std::string> names;
+};
+```
+
+**The module approach:**
+```c++
+// math_utils.cppm (module interface)
+export module math_utils;
+
+import std; // C++23: imports the entire standard library without macro leakage
+
+export constexpr double PI = 3.14159;
+export inline int square(int x) { return x * x; }
+```
+
+```c++
+// main.cpp
+import math_utils;
+
+int main() {
+    auto area = PI * square(5);
+}
+```
+
+### Pros
+
+- **Massive Build Speedups**: The compiler parses the module interface exactly once. Including `import std;` takes a fraction of a second compared to parsing `<vector>`, `<string>`, and `<map>` individually across fifty files.
+- **Complete Macro Isolation**: Macros defined inside a module do not leak out. If a third-party module uses a terrible macro internally, it will not break your code.
+- **Cleaner Architecture**: You explicitly `export` what you want users to see. Everything else remains hidden inside the module.
+
+### Cons
+
+- **The Migration Slog**: You cannot easily mix `#include` and `import` for the same types without risking One Definition Rule (ODR) violations in older toolchains. Migrating an existing, large-scale codebase requires a strict "bottom-up" approach (migrating your lowest-level dependencies first).
 
 ## Compiling
 
@@ -300,7 +346,19 @@ The optimization phase is where the compiler applies a wide array of techniques 
 - **Tail Call Optimization**: Replacing certain recursive calls with iterative code, avoiding stack growth.
 - **Strength Reduction**: Replacing costly operations by less expensive ones (e.g. replacing some multiplications by bit shifts).
 
-**Optimization Levels**: Compilers typically offer different optimization levels (e.g., `-O0`, `-O1`, `-O2`, `-O3` on GCC/Clang). Higher levels generally result in more aggressive optimization, potentially at the cost of longer compilation times.
+#### Optimization Levels
+
+Compilers typically offer different optimization levels:
+
+- **`-O0`**: No optimization. Fastest compilation, easiest debugging. Default if no `-O` flag is specified.
+- **`-O1`**: Basic optimizations that don't significantly increase compile time.
+- **`-O2`**: The standard "production" optimization level. Enables most optimizations that don't involve a space-speed tradeoff.
+- **`-O3`**: Aggressive optimizations including auto-vectorization, loop unrolling, and function inlining. Can occasionally produce slower code due to increased instruction cache pressure.
+- **`-Os`**: Optimize for binary size. Similar to `-O2` but disables optimizations that increase code size.
+- **`-Ofast`**: Enables `-O3` plus optimizations that violate strict standards compliance (e.g., `-ffast-math`). Can change floating-point results. Use with caution in simulation or physics code.
+- **`-Og`** (GCC/Clang): Optimizes for the debugging experience — applies optimizations that don't interfere with debuggability. A good middle ground between `-O0` and `-O2` during development.
+
+Higher levels generally result in more aggressive optimization at the cost of longer compilation times. Note that `-O3` is not always faster than `-O2` at runtime — profile your actual workload before assuming higher is better.
 
 #### Example
 
@@ -314,10 +372,39 @@ for (int i=0; i<1000; ++i) {
 An optimizing compiler might transform this into (conceptually):
 
 ```c++
-int sum = 1000; // Result precalculated
+int sum = 499500; // Result precalculated via constant folding + loop elimination
 ```
 
 **Trade-offs**: Optimization can significantly improve performance, but it can also increase compilation time and sometimes make debugging more difficult (as the optimized code might differ significantly from the source code).
+
+### 5.5. Link-Time Optimization (LTO)
+
+Historically, compilers optimize one translation unit at a time. The compiler cannot inline a function if it is defined in `a.cpp` and called in `b.cpp`, because it only sees one file at a time.
+
+**Link-Time Optimization (LTO)** breaks this boundary. When LTO is enabled (via `-flto` in GCC/Clang or `/GL` + `/LTCG` in MSVC), the compiler does not generate final machine code during the compilation step. Instead, it emits its Intermediate Representation (IR) into the object files.
+
+When the linker runs, it sees IR instead of raw machine code. It merges the IR from all translation units into one program, runs the compiler's optimization passes again across the entire codebase, and then generates the final machine code.
+
+```bash
+# Building with LTO enabled (GCC/Clang)
+$ clang++ -flto -O2 -c a.cpp -o a.o      # Object file contains IR, not machine code
+$ clang++ -flto -O2 -c b.cpp -o b.o
+$ clang++ -flto -O2 a.o b.o -o my_app    # Linker merges IR, optimizes across files, emits machine code
+```
+
+**What LTO enables:**
+
+- **Cross-file function inlining**: A small function defined in `a.cpp` can be inlined into call sites in `b.cpp`.
+- **Cross-file devirtualization**: The compiler can resolve virtual function calls when it can prove the concrete type across translation units.
+- **Aggressive dead code elimination**: Unused functions that are technically "exported" from one translation unit but never called by any other can be stripped entirely.
+
+**Trade-offs:**
+
+- **Longer link times**: Linking can go from seconds to minutes on large codebases, because the linker is now doing heavy compilation work.
+- **Higher memory usage**: Full LTO can consume large amounts of RAM during linking. Modern toolchains offer **ThinLTO** (`-flto=thin` in Clang) which parallelizes the work and uses significantly less memory while retaining most of the performance gains.
+- **Debugging complexity**: The heavily optimized cross-file output can be harder to map back to source code in a debugger.
+
+LTO is most impactful for projects that use many small translation units with functions called across file boundaries — which is most real-world C++ projects.
 
 ### 6. Assembly Code Generation: The Final Translation
 
@@ -415,7 +502,7 @@ Once symbols are resolved, the linker performs relocation. This involves adjusti
 The linker incorporates code from libraries into the final executable. There are two main types of libraries:
 
 - **Static Libraries** (`.a` on Linux/macOS, `.lib` on Windows): These libraries are essentially archives of object files. The linker extracts the necessary object files from the static library and includes them directly into the executable. This results in a larger executable but avoids runtime dependencies on external libraries.
-- **Dynamic Libraries** (`.so` on Linux/macOS, `.dll` on Windows): These libraries are not directly incorporated into the executable. Instead, the linker adds information to the executable that allows the operating system's dynamic loader to find and load the dynamic library at runtime. This results in smaller executables and allows libraries to be shared between multiple programs, but it introduces a runtime dependency.
+- **Dynamic Libraries** (`.so` on Linux, `.dylib` on macOS, `.dll` on Windows): These libraries are not directly incorporated into the executable. Instead, the linker adds information to the executable that allows the operating system's dynamic loader to find and load the dynamic library at runtime. This results in smaller executables and allows libraries to be shared between multiple programs, but it introduces a runtime dependency.
 
 #### 4. Executable File Generation
 
@@ -429,17 +516,40 @@ After resolving symbols and performing relocation, the linker creates the final 
   - Incorrect header file inclusion (leading to missing declarations).
 - **Multiple Definitions**: Occurs when the linker finds more than one definition for the same global symbol. This usually points to a violation of the ODR.
 
-## Notes
+### Mixing Compilers at Link Time
 
-- gcc vs g++
-- static vs dynamic libraries:
-  - https://www.linkedin.com/pulse/differences-between-static-dynamic-libraries-nasser-abuchaibe/
-  - see c++ compiling book page 53
-  - when to use what
-- what is inside object files? (see c++ compiling book page 26)
-- talk about ABI
-  - multiple compilers
-  - cross platform
+A common question when building C++ projects is whether object files and libraries produced by different compilers can be safely linked together. The answer depends on what crosses the API boundary between the components.
+
+### Mixing Compilers at Link Time
+
+On Linux, GCC and Clang are generally ABI-compatible because they both implement the Itanium 
+C++ ABI and default to `libstdc++`. However, safe mixing depends on more than just the calling 
+convention — standard library version, exception handling, RTTI settings, and C++ standard 
+version all play a role.
+
+The short version:
+
+- **Safe to mix**: Libraries with C-style or POD-only APIs (PhysX, zlib, SQLite)
+- **Must use the same compiler**: Libraries that expose STL types in their API (OpenUSD, Qt, Boost)
+- **Never mix**: `libstdc++` and `libc++` in the same binary
+
+For the full requirements checklist, practical rules, and verification commands, 
+see the [ABI guide](abi.md#mixing-gcc-and-clang-on-linux).
+
+#### Decision Matrix for Multi-Library Projects
+
+When building an application that depends on libraries A, B, and C:
+
+| Scenario | Safe? | Why |
+|:---|:---|:---|
+| All libraries + app built with same compiler and flags | Yes | Identical ABI everywhere |
+| Library A built with GCC, app with Clang, A has a C-style API | Yes | No STL types cross the boundary, Itanium ABI is shared |
+| Library A built with GCC, app with Clang, A exposes `std::string` in its API | Risky | STL layout may differ; works today, breaks on compiler update |
+| Library A uses `libstdc++`, library B uses `libc++`, both linked into same app | No | Two incompatible STL implementations in the same process |
+| Library A built with `-D_GLIBCXX_USE_CXX11_ABI=0`, app with `=1` | No | `std::string` and `std::list` have different memory layouts |
+| Static library built with GCC, linked into Clang app, C-style API | Yes | Static linking doesn't change ABI rules — it's still safe because of the C-style API |
+| Static library built with GCC, linked into Clang app, exposes STL types | Risky | Same ABI concerns as dynamic linking — static doesn't magically fix layout mismatches |
+| MSVC-compiled library (.lib/.dll) linked into a Linux GCC/Clang app | No | Completely different object file formats (PE vs ELF), different ABIs (Microsoft vs Itanium), different OS. Must recompile from source. |
 
 ## Static vs Dynamic Libraries
 
@@ -447,7 +557,8 @@ Libraries are collections of pre-compiled code (object files) that can be reused
 
 ### Static Libraries (`.a`, `.lib`)
 
-A **static library** is an archive of object files. During the linking phase, all the required code from the static library (.a or .lib file) is copied directly into your final executable file. This creates a larger, but completely self-contained, program. Because the code is now part of the executable itself, the original library file is no longer needed at runtime.**
+A **static library** is an archive of object files. During the linking phase, all the required code from the static library (`.a` or `.lib` file) is copied directly into your final executable file. This creates a larger, but completely self-contained, program. Because the code is now part of the executable itself, the original library file is no longer needed at runtime.
+
 #### Pros:
 
 - **Self-Contained Executable**: The executable has no external dependencies on the library, making distribution and deployment simpler. Just copy the executable, and it runs.
@@ -458,7 +569,7 @@ A **static library** is an archive of object files. During the linking phase, al
 - **Larger Executable Size**: Every program that uses the library gets its own copy of the code, leading to larger file sizes.
 - **Difficult to Update**: If a bug is found in the library, every program that uses it must be re-linked and redistributed.
 
-### Dynamic Libraries (`.so`, `.dll`)
+### Dynamic Libraries (`.so`, `.dylib`, `.dll`)
 
 A **dynamic library** (or shared library) is a separate file that is not copied into the executable at link time. Instead, the linker places a reference to the library in the executable. When the program is run, the operating system's dynamic loader finds the required library on the system and loads it into memory, where it can be shared among multiple running programs.
 
@@ -466,7 +577,7 @@ A **dynamic library** (or shared library) is a separate file that is not copied 
 
 - **Smaller Executable Size**: The executable is much smaller because it only contains references to the library, not the library code itself.
 - **Shared Memory**: A single copy of the library in memory can be used by multiple programs, saving RAM.
-- **Easier Updates**: To update the library, you can simply replace the .so or .dll file. All programs using it will benefit from the update on their next run without needing to be recompiled or re-linked (assuming the ABI remains compatible).
+- **Easier Updates**: To update the library, you can simply replace the `.so`, `.dylib`, or `.dll` file. All programs using it will benefit from the update on their next run without needing to be recompiled or re-linked (assuming the ABI remains compatible).
 
 #### Cons:
 
@@ -482,6 +593,71 @@ A **dynamic library** (or shared library) is a separate file that is not copied 
 | Creating a plugin system                          | Dynamic Library    | Plugins are a natural fit for dynamic loading at runtime.                                             |
 | Working in a resource-constrained environment (disk space) | Dynamic Library    | Minimizes disk space by sharing common code.                                                          |
 | Prioritizing maximum performance and link-time optimization | Static Library     | Allows the linker to perform optimizations across both the application and library code.              |
+
+### A Note on ABI Stability
+
+Static libraries freeze the library code into your executable at build time. This means the library's ABI is locked to whatever version you linked against — no surprises at runtime.
+
+Dynamic libraries introduce ABI as a runtime concern. If you update a `.so` file and the new version changes the size of a struct, reorders virtual functions, or changes a function signature, existing executables will crash or misbehave. This is why major libraries (like OpenUSD, Qt, Boost) carefully manage ABI compatibility across releases, and why Linux distributions are cautious about updating shared libraries.
+
+For your own projects: if you're distributing a plugin that loads into a host application (e.g., a Houdini plugin, a USD file format plugin), you must build your plugin as a dynamic library, and you must use the exact same compiler, standard library, and ABI settings as the host application.
+
+### Symbol Visibility
+
+When building a static library, all symbols are available to the linker by default. When building a **dynamic library**, you need to control which functions and classes are "visible" (exported) to consumers, and which are internal to the library.
+
+If you don't manage visibility, your dynamic library either exports too much (causing symbol clashes, slower load times, and a fragile ABI surface) or exports nothing (causing "unresolved external symbol" errors when someone tries to use it).
+
+#### The Problem
+
+On **Windows**, symbols are hidden by default — you must explicitly mark them for export with `__declspec(dllexport)`. On **Linux/macOS**, the opposite is true: all symbols are visible by default, which is usually not what you want for a library.
+
+#### The Solution
+
+Use a macro that adapts to both platforms, and compile with `-fvisibility=hidden` on Linux/macOS to match the Windows model:
+
+```c++
+// mylib_export.h
+#if defined(_WIN32)
+    #ifdef BUILDING_MYLIB
+        #define MYLIB_API __declspec(dllexport)
+    #else
+        #define MYLIB_API __declspec(dllimport)
+    #endif
+#else
+    #define MYLIB_API __attribute__((visibility("default")))
+#endif
+```
+
+```c++
+// mylib.h
+#include "mylib_export.h"
+
+class MYLIB_API EngineCore {       // Exported: consumers can use this
+public:
+    void start();
+    void shutdown();
+private:
+    void internal_setup();          // Not exported: internal to the .so/.dll
+};
+
+// Helper function only used inside the library — not exported
+void do_internal_work();
+```
+
+```bash
+# Build the library with hidden visibility by default (Linux/macOS)
+$ clang++ -shared -fvisibility=hidden -DBUILDING_MYLIB -o libmylib.so mylib.cpp
+```
+
+**Best practice**: Always compile dynamic libraries on Linux/macOS with `-fvisibility=hidden`. This forces you to explicitly mark your public API, preventing internal library symbols from clashing with symbols in the host application or other libraries. This also reduces the library's exported symbol table, which speeds up dynamic loading.
+
+## Notes
+
+- [x] gcc vs g++ — covered in compilers guide
+- [x] static vs dynamic libraries — covered above
+- [ ] what is inside object files? (see c++ compiling book page 26) — partially covered in Assembling section
+- [x] talk about ABI — covered above and in ABI guide
 
 ## References
 
