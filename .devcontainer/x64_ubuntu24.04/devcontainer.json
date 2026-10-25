@@ -5,14 +5,16 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"ms-vscode.cpptools-themes",
-				"ms-vscode.cpptools",
-				"franneck94.c-cpp-runner",
 				"ms-vscode.cmake-tools",
 				"mhutchie.git-graph",
-				"vadimcn.vscode-lldb",
 				"marlongerson.jetbrains-icons",
-				"chrisdias.vscode-opennewinstance"
+				"llvm-vs-code-extensions.vscode-clangd",
+				"llvm-vs-code-extensions.lldb-dap",
+				"xaver.clang-format",
+				"chrisdias.vscode-opennewinstance",
+				"NarasimaPandiyan.jetbrainsmono",
+				"anthropic.claude-code",
+				"sorn.swiglang"
 			],
 			"settings": {
 				"terminal.integrated.defaultProfile.linux": "zsh",
@@ -28,5 +30,5 @@
 			}
 		}
 	},
-	"workspaceFolder": "/home/developer/CPP-Guide",
+	"workspaceFolder": "/home/developer/CPP-Guide"
 }

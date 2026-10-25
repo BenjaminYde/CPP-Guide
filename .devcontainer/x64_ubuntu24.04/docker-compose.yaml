@@ -1,7 +1,7 @@
 services:
   devcontainer:
-    stdin_open: true # docker run -i
-    tty: true        # docker run -t
+    stdin_open: true
+    tty: true
     build:
       context: ../..
       dockerfile: .devcontainer/x64_ubuntu24.04/Dockerfile
