@@ -79,7 +79,8 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
 
 - [Function Pointers](./guide/functions/function_pointers.md)
 - [Lambdas](./guide/functions/lambdas.md)
-- [std::function](./guide/functions/std_function.md)
+- [std::function](./guide/functions/std_function.md) (C++11)
+- [std::move_only_function](./guide/functions/std_move_only_function.md) (C++23)
 </td>
 
 </tr>
