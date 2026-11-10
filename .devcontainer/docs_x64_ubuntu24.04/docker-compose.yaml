@@ -1,0 +1,12 @@
+services:
+  devcontainer:
+    stdin_open: true
+    tty: true
+    build:
+      context: ../..
+      dockerfile: .devcontainer/docs_x64_ubuntu24.04/Dockerfile
+    user: developer
+    volumes:
+      # workspace
+      - ../..:/home/developer/CPP-Guide
+    network_mode: host

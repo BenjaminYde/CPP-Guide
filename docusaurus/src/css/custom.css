@@ -1,0 +1,220 @@
+/**
+ * Global theme: Unreal Engine 5–style charcoal UI with a Houdini-orange accent.
+ * Infima variables drive most of the look; the rest are targeted overrides.
+ */
+
+/* ---------- Light mode: neutral greys, deep orange (AA contrast on white) ---------- */
+:root {
+  --ifm-color-primary: #c2510a;
+  --ifm-color-primary-dark: #af4909;
+  --ifm-color-primary-darker: #a54508;
+  --ifm-color-primary-darkest: #883907;
+  --ifm-color-primary-light: #d5590b;
+  --ifm-color-primary-lighter: #df5d0c;
+  --ifm-color-primary-lightest: #f26d1a;
+
+  --ifm-background-color: #f4f4f5;
+  --ifm-background-surface-color: #ffffff;
+  --ifm-navbar-background-color: #ffffff;
+  --ifm-footer-background-color: #1a1a1a;
+
+  --ifm-font-family-base: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --ifm-font-family-monospace: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', ui-monospace, monospace;
+  --ifm-heading-font-weight: 600;
+  --ifm-code-font-size: 92%;
+  --ifm-global-radius: 4px;
+  --ifm-code-border-radius: 3px;
+
+  --ue-accent-glow: rgba(255, 122, 26, 0.18);
+  --docusaurus-highlighted-code-line-bg: rgba(255, 122, 26, 0.14);
+}
+
+/* ---------- Dark mode: UE5 editor charcoal ---------- */
+[data-theme='dark'] {
+  --ifm-color-primary: #ff7a1a;
+  --ifm-color-primary-dark: #ff6c00;
+  --ifm-color-primary-darker: #f26600;
+  --ifm-color-primary-darkest: #c75400;
+  --ifm-color-primary-light: #ff8a37;
+  --ifm-color-primary-lighter: #ff9245;
+  --ifm-color-primary-lightest: #ffab70;
+
+  /* UE5 surface stack: viewport → panel → header → hover */
+  --ue-bg-0: #0f0f0f;
+  --ue-bg-1: #151515;
+  --ue-bg-2: #1c1c1c;
+  --ue-bg-3: #242424;
+  --ue-bg-4: #2e2e2e;
+  --ue-border: #2b2b2b;
+  --ue-border-strong: #3a3a3a;
+
+  --ifm-background-color: var(--ue-bg-1);
+  --ifm-background-surface-color: var(--ue-bg-2);
+  --ifm-navbar-background-color: var(--ue-bg-0);
+  --ifm-footer-background-color: var(--ue-bg-0);
+  --ifm-card-background-color: var(--ue-bg-2);
+  --ifm-dropdown-background-color: var(--ue-bg-3);
+  --ifm-hover-overlay: rgba(255, 255, 255, 0.04);
+
+  --ifm-font-color-base: #c8c8c8;
+  --ifm-heading-color: #e8e8e8;
+  --ifm-color-content-secondary: #9a9a9a;
+  --ifm-toc-border-color: var(--ue-border);
+  --ifm-color-emphasis-200: var(--ue-border-strong);
+  --ifm-table-border-color: var(--ue-border-strong);
+  --ifm-table-stripe-background: rgba(255, 255, 255, 0.02);
+  --ifm-table-head-background: var(--ue-bg-3);
+
+  --ifm-code-background: #232323;
+  --ifm-menu-color: #b4b4b4;
+  --ifm-menu-color-background-active: rgba(255, 122, 26, 0.1);
+  --ifm-menu-color-background-hover: rgba(255, 255, 255, 0.04);
+
+  --ue-accent-glow: rgba(255, 122, 26, 0.25);
+  --docusaurus-highlighted-code-line-bg: rgba(255, 122, 26, 0.16);
+}
+
+/* ---------- Navbar: flat editor title bar with an orange hairline ---------- */
+.navbar {
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+  box-shadow: none;
+}
+[data-theme='dark'] .navbar {
+  border-bottom-color: var(--ue-border);
+}
+.navbar__title {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Sidebar: darker panel, orange active marker ---------- */
+[data-theme='dark'] .theme-doc-sidebar-container {
+  background: var(--ue-bg-0);
+  border-right-color: var(--ue-border) !important;
+}
+.menu__link--active:not(.menu__link--sublist) {
+  box-shadow: inset 2px 0 0 var(--ifm-color-primary);
+  border-radius: 0 var(--ifm-global-radius) var(--ifm-global-radius) 0;
+}
+.menu__link,
+.menu__caret {
+  border-radius: var(--ifm-global-radius);
+}
+
+/* ---------- TOC ---------- */
+.table-of-contents__link--active {
+  color: var(--ifm-color-primary);
+  font-weight: 600;
+}
+
+/* ---------- Code ---------- */
+[data-theme='dark'] {
+  --prism-background-color: #1b1b1b;
+}
+[data-theme='dark'] div[class*='codeBlockContainer'] {
+  border: 1px solid var(--ue-border);
+  box-shadow: none;
+}
+[data-theme='dark'] div[class*='codeBlockTitle'] {
+  background: var(--ue-bg-3);
+  border-bottom: 1px solid var(--ue-border);
+  color: #a8a8a8;
+}
+:not(pre) > code {
+  border: 1px solid var(--ifm-color-emphasis-200);
+}
+[data-theme='dark'] :not(pre) > code {
+  color: #ffb27a;
+  border-color: var(--ue-border-strong);
+}
+
+/* ---------- Content details ---------- */
+.markdown h1,
+.markdown h2 {
+  letter-spacing: -0.01em;
+}
+[data-theme='dark'] .markdown h2 {
+  border-bottom: 1px solid var(--ue-border);
+  padding-bottom: 0.3rem;
+}
+.markdown a {
+  text-underline-offset: 2px;
+}
+[data-theme='dark'] .markdown blockquote {
+  background: var(--ue-bg-2);
+  border-left-color: var(--ifm-color-primary);
+  color: #b0b0b0;
+}
+[data-theme='dark'] hr {
+  background-color: var(--ue-border);
+}
+
+/* Cards / admonitions sit on raised panels like UE details panels */
+[data-theme='dark'] .card {
+  background: var(--ue-bg-2);
+  border: 1px solid var(--ue-border);
+}
+[data-theme='dark'] .alert {
+  background: var(--ue-bg-2);
+  border: 1px solid var(--ue-border);
+  border-left-width: 4px;
+  color: var(--ifm-font-color-base);
+}
+[data-theme='dark'] .alert--info      { border-left-color: #3d8fd6; }
+[data-theme='dark'] .alert--success   { border-left-color: #4caf50; }
+[data-theme='dark'] .alert--warning   { border-left-color: #ff7a1a; }
+[data-theme='dark'] .alert--danger    { border-left-color: #e5484d; }
+[data-theme='dark'] .alert--secondary { border-left-color: #6b6b6b; }
+
+/* ---------- Buttons ---------- */
+.button--primary {
+  color: #111;
+  font-weight: 600;
+}
+.button--primary:hover {
+  color: #111;
+  box-shadow: 0 0 0 3px var(--ue-accent-glow);
+}
+
+/* ---------- Pagination / footer ---------- */
+[data-theme='dark'] .pagination-nav__link {
+  background: var(--ue-bg-2);
+  border-color: var(--ue-border);
+}
+.pagination-nav__link:hover {
+  border-color: var(--ifm-color-primary);
+}
+/* Infima's footer--dark sets its own blue-grey palette; override it with UE greys */
+.footer--dark {
+  --ifm-footer-background-color: #0f0f0f;
+  --ifm-footer-color: #8a8a8a;
+  --ifm-footer-title-color: #d8d8d8;
+  --ifm-footer-link-color: #a8a8a8;
+  --ifm-footer-link-hover-color: var(--ifm-color-primary);
+  border-top: 1px solid #2b2b2b;
+}
+.footer--dark .footer__title {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.footer--dark .footer__copyright {
+  font-size: 0.85rem;
+  color: #6e6e6e;
+}
+
+/* ---------- Scrollbars (UE-ish thin grey) ---------- */
+[data-theme='dark'] {
+  scrollbar-color: #3a3a3a transparent;
+}
+[data-theme='dark'] ::-webkit-scrollbar { width: 10px; height: 10px; }
+[data-theme='dark'] ::-webkit-scrollbar-thumb {
+  background: #3a3a3a;
+  border-radius: 5px;
+  border: 2px solid var(--ue-bg-1);
+}
+[data-theme='dark'] ::-webkit-scrollbar-thumb:hover { background: #4a4a4a; }
+
+::selection {
+  background: rgba(255, 122, 26, 0.35);
+}

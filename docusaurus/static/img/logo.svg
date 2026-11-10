@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="C++ Guide">
+  <rect width="64" height="64" rx="14" fill="#ff7a1a"/>
+  <path d="M27 20.5a12 12 0 1 0 0 23" fill="none" stroke="#151515" stroke-width="6" stroke-linecap="round"/>
+  <path d="M35 32h7M38.5 28.5v7M47 32h7M50.5 28.5v7" fill="none" stroke="#151515" stroke-width="3" stroke-linecap="round"/>
+</svg>

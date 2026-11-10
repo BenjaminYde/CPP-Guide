@@ -1,0 +1,33 @@
+{
+	"name": "cpp_guide_docs",
+	"dockerComposeFile": "docker-compose.yaml",
+	"service": "devcontainer",
+	"postCreateCommand": "cd /home/developer/CPP-Guide/docusaurus && npm ci",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"mhutchie.git-graph",
+				"marlongerson.jetbrains-icons",
+				"chrisdias.vscode-opennewinstance",
+				"NarasimaPandiyan.jetbrainsmono",
+				"anthropic.claude-code",
+				"yzhang.markdown-all-in-one",
+				"unifiedjs.vscode-mdx",
+				"github.vscode-github-actions"
+			],
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "zsh",
+				"terminal.integrated.profiles.linux": {
+					"Azure Cloud Shell (Bash)": null,
+					"Azure Cloud Shell (PowerShell)": null,
+					"JavaScript Debug Terminal": null,
+					"bash": null,
+					"zsh": {
+						"path": "/usr/bin/zsh"
+					}
+				}
+			}
+		}
+	},
+	"workspaceFolder": "/home/developer/CPP-Guide"
+}

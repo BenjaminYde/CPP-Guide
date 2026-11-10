@@ -1,0 +1,95 @@
+.button {
+  display: inline-flex;
+  align-items: stretch;
+  height: 2rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1;
+  border-radius: var(--ifm-global-radius);
+  border: 1px solid var(--ue-border-strong, var(--ifm-color-emphasis-300));
+  overflow: hidden;
+  white-space: nowrap;
+  transition:
+    border-color var(--ifm-transition-fast) ease,
+    box-shadow var(--ifm-transition-fast) ease,
+    background-color var(--ifm-transition-fast) ease;
+}
+
+.button:hover {
+  text-decoration: none;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0 0.7rem;
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  flex: none;
+}
+
+.lg {
+  height: 2.75rem;
+  font-size: 1rem;
+}
+
+.lg .label {
+  padding: 0 1.1rem;
+}
+
+/* GitHub star: neutral grey panel button, star turns orange on hover */
+.star {
+  color: var(--ifm-font-color-base);
+  background: var(--ue-bg-3, var(--ifm-color-emphasis-100));
+}
+
+.star:hover {
+  color: var(--ifm-heading-color);
+  border-color: var(--ifm-color-primary);
+}
+
+.star:hover .icon:nth-of-type(2) {
+  color: var(--ifm-color-primary);
+}
+
+.count {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.6rem;
+  border-left: 1px solid var(--ue-border-strong, var(--ifm-color-emphasis-300));
+  background: var(--ue-bg-2, var(--ifm-background-surface-color));
+  font-variant-numeric: tabular-nums;
+}
+
+/* Support: orange outline, fills on hover */
+.support {
+  color: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
+  background: transparent;
+}
+
+.support:hover {
+  color: #111;
+  background: var(--ifm-color-primary);
+  box-shadow: 0 0 0 3px var(--ue-accent-glow);
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+}
+
+.mobile {
+  margin: 0.25rem var(--ifm-menu-link-padding-horizontal, 0.75rem);
+}
+
+/* Navbar gets crowded below desktop width; Docusaurus moves right items into the sidebar there */
+@media (max-width: 996px) {
+  .navItem:not(:global(.menu__list-item)) {
+    display: none;
+  }
+}

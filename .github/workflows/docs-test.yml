@@ -1,0 +1,36 @@
+name: Test Docs Build
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "guide/**"
+      - "docusaurus/**"
+      - ".github/workflows/docs-*.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  test-build:
+    name: Test build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: docusaurus
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: docusaurus/.nvmrc
+          cache: npm
+          cache-dependency-path: docusaurus/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Build website
+        run: npm run build

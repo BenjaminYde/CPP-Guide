@@ -1,0 +1,63 @@
+name: Deploy Docs to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "guide/**"
+      - "docusaurus/**"
+      - ".github/workflows/docs-*.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Allow only one concurrent deployment, but don't cancel an in-progress one
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build Docusaurus
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: docusaurus
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Full history is needed for the "last updated" dates
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: docusaurus/.nvmrc
+          cache: npm
+          cache-dependency-path: docusaurus/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Build website
+        run: npm run build
+      - name: Upload build artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: docusaurus/build
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write # to deploy to Pages
+      id-token: write # to verify the deployment originates from an appropriate source
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

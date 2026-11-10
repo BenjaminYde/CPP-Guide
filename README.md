@@ -4,6 +4,8 @@
 
 The CPP Guide repository is meant to be a **guide / quick reference** for C++ developers where I try to get to the point so you can spend more time programming. This guide is **Markdown**, so it is easily opened using **Visual Studio Code** or **Github**. It contains extensive documentation, code examples and best practices.
 
+📖 **Read it online** (with search): [benjaminyde.github.io/CPlusPlus-Guide](https://benjaminyde.github.io/CPlusPlus-Guide/)
+
 ### 📝 A Note on Reading This Guide
 
 Before you dive in, it's important to understand that this guide is **structured by topic, not by difficulty**. There is **no prescribed "beginner to advanced" path**. Feel free to jump to any section that is relevant to your needs. A developer needing to understand `std::vector` can go straight there, while another might need to brush up on "RAII" or "CMake Presets."
@@ -11,6 +13,19 @@ Before you dive in, it's important to understand that this guide is **structured
 ### 🚀 Execute Code Examples 
 
 Explore the `📁 examples` directory for **interactive C++** code examples, easily executable inside a **Docker DevContainer** within **Visual Studio Code**.  This setup ensures a consistent and streamlined coding environment, ideal for learning and experimentation.
+
+### 🌐 Documentation Website
+
+The guide is also published as a [Docusaurus](https://docusaurus.io/) website, built from the `📁 guide` directory. The website project lives in `📁 docusaurus` and has its own **DevContainer** (`cpp_guide_docs`, in `.devcontainer/docs_x64_ubuntu24.04`).
+
+1. Open the project in the `cpp_guide_docs` DevContainer. Dependencies are installed automatically (`npm ci`).
+2. Go into the `docusaurus` folder.
+3. Run `npm start` to start a live-reloading development server at [localhost:3000/CPlusPlus-Guide/](http://localhost:3000/CPlusPlus-Guide/).
+4. Run `npm run build && npm run serve` to test the production build. **The search bar only works in a production build**: the search index is generated at build time, so no external search service is needed.
+
+When adding a new page, add it to the table of contents below **and** to `docusaurus/sidebars.ts`. Pages are plain Markdown (`.md`, CommonMark like GitHub); GitHub alerts such as `> [!NOTE]` are rendered as admonitions on the website.
+
+The website is deployed to **GitHub Pages** by the `Deploy Docs to GitHub Pages` workflow on every push to `main` (requires *Settings → Pages → Source: GitHub Actions*). Pull requests are checked by the `Test Docs Build` workflow.
 
 ## 🗂️ Table of Contents 
 
@@ -184,7 +199,7 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
   - [static_cast](./guide/typing/casting/static_cast.md)
   - [dynamic_cast](./guide/typing/casting/dynamic_cast.md)
 - [Using constexpr](./guide/typing/using_constexpr.md)
-- [Using constval](./guide/typing/using_constval.md)
+- [Using consteval](./guide/typing/using_constval.md)
 </td>
 
 <td width="33%">
