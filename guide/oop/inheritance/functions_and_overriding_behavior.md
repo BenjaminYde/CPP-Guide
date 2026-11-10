@@ -1,3 +1,5 @@
+# Functions and Overriding Behavior
+
 When a derived class inherits from a base class, it gains access to the members and methods of that base class, depending on the access specifiers. Inherited member functions can be called just like any other member functions of the derived class.
 
 Here's an example to illustrate calling an inherited function:

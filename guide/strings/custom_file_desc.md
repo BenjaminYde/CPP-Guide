@@ -1,3 +1,7 @@
+---
+draft: true
+---
+
 Excellent question. This gets into the powerful but often misunderstood world of shell I/O redirection and file descriptors.
 
 The short answer is: **yes, there are other numbers, and yes, you can fully separate `cout`, `clog`, and `cerr` with a bit of shell magic.**

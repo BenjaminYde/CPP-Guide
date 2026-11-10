@@ -188,7 +188,7 @@ target_link_libraries(MyApp PRIVATE some_custom_lib)
 
 This tells the linker to search in `/opt/custom/lib` to find `libsome_custom_lib.a` (or `.so`). 
 
-> [!Warning]
+> [!WARNING]
 > In the example above you see there there is no target for the custom library so it is not really a modern approach. Modern practice prefers linking to IMPORTED targets, which already know their own paths. See the example below.
 
 ```cmake

@@ -1,3 +1,5 @@
+# Explicit Casting
+
 Explicit casting allows programmers to convert a data type into another data type. There are four kinds of explicit type casts: `static_cast`, `reinterpret_cast`, `const_cast`, and `dynamic_cast`.
 
 1. **static_cast**: This is the most common cast, and can be used in any scenario where implicit conversion is possible, as well as for additional operations. This includes numeric conversions, conversions between a pointer to a base and a pointer to a derived class, and more. However, it does not perform any runtime checks, so improper use can lead to errors. It's generally safer than implicit conversions because it makes the programmer's intention explicit.

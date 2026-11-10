@@ -1,3 +1,5 @@
+# Covariant Return Types
+
 Covariant return types in C++ allow a derived class to override a virtual function inherited from a base class, such that the derived class's version of the function returns a pointer or reference to a type that is a derived type of the return type of the base class function.
 
 Here's a simplified example to explain the concept:

@@ -1,3 +1,5 @@
+# Hiding Inherited Functionality
+
 In C++, it is not possible to remove or restrict functionality from a base class other than by modifying the source code. However, in a derived class, it is possible to hide functionality that exists in the base class, so that it can not be accessed through the derived class. This can be done simply by changing the relevant access specifier.
 
 For example, we can make a public member private:

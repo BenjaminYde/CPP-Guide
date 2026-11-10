@@ -61,7 +61,7 @@ int main() {
 
 By explicitly deleting the constructor that takes an `int`, you ensure that the class can only be constructed with a `double`.
 
-# Usage examples
+## Usage examples
 
 ```c++
 struct A

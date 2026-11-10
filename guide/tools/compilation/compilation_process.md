@@ -47,7 +47,7 @@ File inclusion involves inserting the contents of specified header files into yo
 #include "my_header.h" // Includes a user-defined header
 ```
 
-- `#include <header>`: Searches for header in the system include directories. Used for standard library headers (e.g., <iostream>, <vector>).
+- `#include <header>`: Searches for header in the system include directories. Used for standard library headers (e.g., `<iostream>`, `<vector>`).
 - `#include "header"`: First searches in the directory containing the current file, then in the system include directories. Used for user-defined headers.
 
 #### 2. Macro Expansion

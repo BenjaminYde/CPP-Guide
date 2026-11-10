@@ -1,3 +1,5 @@
+# `std::async` and `std::future`
+
 ## Basic Asynchronous Task
 
 The `std::async` function is a higher-level, more convenient way to launch asynchronous tasks. It runs a function asynchronously (potentially in a new thread) and returns a `std::future` representing the result of that function.

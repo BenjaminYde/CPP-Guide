@@ -1,3 +1,5 @@
+# Introduction to Virtual Functions
+
 ## What are virtual functions
 
 A **virtual function** is a special type of member function that, when called, resolves to the most-derived version of the function for the actual type of the object being referenced or pointed to. 

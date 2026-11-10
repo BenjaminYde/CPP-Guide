@@ -1,3 +1,5 @@
+# Implicit Casting
+
 Implicit casting, also known as automatic type conversion or coercion, is an automatic type conversion by the compiler. It happens whenever an expression of one type is used in a context where another type is expected. This process doesn't require any explicit operator or function to initiate it. The compiler does it on its own to get the appropriate data type.
 
 There are some rules and guidelines about when and how these conversions can occur. Generally, implicit conversions can happen when:

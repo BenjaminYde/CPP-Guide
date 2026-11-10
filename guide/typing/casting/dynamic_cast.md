@@ -1,3 +1,5 @@
+# `dynamic_cast`
+
   
 Dynamic casting in C++ is performed using the `dynamic_cast` operator. It is primarily used for safely downcasting pointers or references within a hierarchy of classes involving polymorphism. Unlike other casting operators, `dynamic_cast` checks the validity of the cast at runtime.
 

@@ -1,3 +1,5 @@
+# Classes vs Structs
+
 ## Structs
 
 - Defined with the `struct` keyword.

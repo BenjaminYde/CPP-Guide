@@ -38,7 +38,7 @@ Think of it as a large, open warehouse where you can request a storage space of 
 
 - **Manual Control**: Unlike the stack, memory on the free store is not managed automatically. You are responsible for both allocation (`new`) and deallocation (`delete`).
 
-- **Forgetting to `delete` causes Memory Leaks**: If you request memory with ne`w and forget to release it with `delete`, that memory becomes unusable for the rest of the program's duration. This is a **memory leak**.
+- **Forgetting to `delete` causes Memory Leaks**: If you request memory with `new` and forget to release it with `delete`, that memory becomes unusable for the rest of the program's duration. This is a **memory leak**.
 
 - **Larger Size**: The free store is typically much larger than the stack, limited only by the available system memory.
 

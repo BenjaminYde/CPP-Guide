@@ -84,7 +84,7 @@ int main() {
 }
 ```
 
-> [!NOTE]  
+> [!NOTE]
 > The `std::string&& parameter` is not `const` because the entire purpose of an rvalue reference overload is to **enable modification** of the source object. It signals: "I've been given a temporary object that's about to be destroyed, so I am allowed to tear it apart and steal its internal resources for my own use." This "stealing" is called a **move operation**, and it is inherently a mutating action.
 
 ### Why do we care? For Optimization.

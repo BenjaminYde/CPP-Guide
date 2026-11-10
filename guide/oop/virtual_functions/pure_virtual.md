@@ -1,3 +1,5 @@
+# Pure Virtual Functions
+
 In C++, a pure virtual function is a virtual function that you declare in a base class but don't define. A class containing a pure virtual function is called an abstract class, and you can't create objects of an abstract class. The primary purpose of a pure virtual function (and, by extension, an abstract class) is to define an interface that derived classes must implement.
 ### Syntax
 

@@ -1,4 +1,6 @@
-# std::queue
+# Container Adaptors
+
+## std::queue
 
 The `std::queue` is a container adapter in C++ Standard Library that provides a First-In, First-Out (FIFO) data structure, often used in scenarios that require elements to be processed in the order they were added. The underlying data structure for a `std::queue` is `std::deque`.
 
@@ -64,7 +66,7 @@ Here are some commonly used member functions:
 
 By using `std::queue`, you make it explicit that you're using a FIFO data structure, which can make the code easier to understand and potentially reduce errors.
 
-# std::stack
+## std::stack
 
 The `std::stack` is a container adapter in the C++ Standard Library. It provides a Last-In, First-Out (LIFO) data structure, which is often useful in scenarios that require elements to be processed in the reverse order of their arrival. 
 
@@ -129,7 +131,7 @@ Here are some key member functions for `std::stack`:
 
 By using `std::stack`, you can clearly communicate your intent of using a LIFO data structure, which can make your code easier to read and maintain.
 
-# std::priority_queue
+## std::priority_queue
 
 The `std::priority_queue` is a container adapter in the C++ Standard Library that provides a priority queue. In a priority queue, the element with the highest priority (or the lowest, depending on the comparator used) is always at the front. Elements are not sorted in ascending or descending order but are rather organized in a "heap" data structure, which enables efficient insertion and retrieval of the highest-priority element.
 

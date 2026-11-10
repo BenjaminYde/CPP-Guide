@@ -1,4 +1,4 @@
-## `std::string`
+# `std::string`
 
 The `std::string` class is the workhorse of C++ text manipulation and part of the STL (Standard Library) and provides a high-level, convenient way to handle strings. It's defined in the `<string>` header. 
 

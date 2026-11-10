@@ -1,3 +1,5 @@
+# `std::thread`
+
 C++11 introduced native support for multi-threading via the Standard Library. Prior to this, you would need to use platform-specific libraries like Pthreads on Unix or Win32 threads on Windows. The `<thread>` header includes classes and functions required to create and manage threads.
 
 To create a new thread, you usually construct a `std::thread` object and provide the function you want to run in the thread as an argument.

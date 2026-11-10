@@ -1,3 +1,5 @@
+# `static_cast`
+
 `static_cast` is a type of casting operator used for conversions between types. It can perform conversions between pointers to related classes, not only from the derived class to its base, but also from base to derived. This ensures that if the type you are casting is not capable of being converted to the destination type, it will cause a compile error.
 
 One key thing to note is that `static_cast` is a compile-time cast. It doesn't perform any runtime checks. This makes it faster, but also means that misuse can lead to undefined behavior.

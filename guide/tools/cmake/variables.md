@@ -114,7 +114,7 @@ Ask the following questions to decide whether a variable should be cached:
 
 ###  3. Environment Variables
 
-Environment variables are inherited from the system or shell environment. These are accessed in CMake using the $ENV{VAR_NAME} syntax.
+Environment variables are inherited from the system or shell environment. These are accessed in CMake using the `$ENV{VAR_NAME}` syntax.
 
 ```cmake
 set(PATH_VAR $ENV{PATH})

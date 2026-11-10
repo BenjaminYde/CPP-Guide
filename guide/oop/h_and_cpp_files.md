@@ -1,3 +1,5 @@
+# Header (.h) and Source (.cpp) Files
+
 ## Header Files in C++
 
 In C++, the code is typically separated into declaration and implementation. This makes it possible to split code across multiple files. This is where header files come into play.

@@ -1,3 +1,5 @@
+# `override` and `final` Specifiers
+
 ## Override specifier
 
 The `override` specifier in C++ is used to indicate that a member function is meant to override a virtual function declared in a base class. The compiler will check to ensure that:
@@ -34,7 +36,7 @@ Advantages of using `override`:
 
 In summary, using the `override` specifier is a good practice for writing robust, maintainable, and self-explanatory C++ code.
 
-# Final specifier
+## Final specifier
 
 The `final` specifier in C++ serves a different purpose than `override`, but like `override`, it's used in the context of class inheritance and virtual functions. When you mark a virtual function with `final`, you're saying that this function can't be overridden by any classes that inherit from it. Similarly, if you mark an entire class as `final`, you're saying that the class can't be inherited by any other class.
 

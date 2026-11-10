@@ -1,3 +1,5 @@
+# Access Specifiers in Inheritance
+
 Inheritance allows a class (derived class) to inherit attributes and methods from another class (base class). It enables code reusability and can be used to implement relationships between classes like "is-a" or "kind-of".
 
 ```c++

@@ -1,3 +1,5 @@
+# The `auto` Keyword
+
 In C++, the `auto` keyword is used for type inference, allowing the compiler to automatically deduce the type of a variable at compile-time. This can make your code more readable and maintainable. However, you can also use `auto` with pointers (`auto*`) and references (`auto&`) to indicate that you want a pointer or reference to a deduced type. Here's a breakdown:
 
 ## auto

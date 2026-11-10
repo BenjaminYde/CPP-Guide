@@ -1,3 +1,5 @@
+# `std::unordered_set`
+
 A hash-based dynamic container that stores unique elements and allows for fast average-time look-up, addition, and deletion operations. Unlike `std::set`, it does not sort the elements and generally has higher memory overhead.
 ## Characteristics
 

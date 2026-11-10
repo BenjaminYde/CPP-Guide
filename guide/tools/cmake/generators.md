@@ -37,7 +37,7 @@ Starting with CMake 3.17, the Ninja generator supports multi-configuration build
 
 #### Key Features:
 
-- **Multiple Build Configurations**: Generate separate build-<Config>.ninja files for each configuration specified in CMAKE_CONFIGURATION_TYPES. For example, specifying Debug and Release will create build-Debug.ninja and build-Release.ninja files.
+- **Multiple Build Configurations**: Generate separate `build-<Config>.ninja` files for each configuration specified in `CMAKE_CONFIGURATION_TYPES`. For example, specifying Debug and Release will create `build-Debug.ninja` and `build-Release.ninja` files.
 
 - **Cross-Config Mode**: Enables building targets across different configurations. For instance, you can build a target in the Release configuration while using tools built in the Debug configuration. This is particularly useful for scenarios where you want to run a release-optimized version of a generator utility while still building the debug version of the targets built with the generated code. 
 

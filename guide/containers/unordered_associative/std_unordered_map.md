@@ -1,3 +1,5 @@
+# `std::unordered_map`
+
 The `std::unordered_map` container in the C++ Standard Library serves as a collection of key-value pairs, similar to `std::map`. However, the underlying data structure for `std::unordered_map` is a hash table. This allows for average-time complexity of `O(1)` for search, insert, and delete operations, compared to the `O(log n)` time complexity of `std::map`.
 
 The elements are not stored in any sorted order within the container but are organized into buckets depending on their hash values to allow fast access to individual elements directly by their key values (which are also used to uniquely identify the elements).

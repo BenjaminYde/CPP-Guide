@@ -1,3 +1,5 @@
+# Object Slicing
+
 Object slicing in C++ occurs when an object of a derived class is assigned to an object of the base class, resulting in the loss of any member variables or functionalities that are specific to the derived class. This phenomenon can also occur when passing derived objects by value to a function that accepts base objects.
 
 Consider the following classes:

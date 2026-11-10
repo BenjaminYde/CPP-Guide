@@ -1,3 +1,5 @@
+# Multiple Inheritance
+
 Multiple inheritance in C++ is a feature that allows a class to inherit from more than one base class. This is different from languages like Java or C#, where a class can inherit from only one parent class (single inheritance).
 
 ### Syntax

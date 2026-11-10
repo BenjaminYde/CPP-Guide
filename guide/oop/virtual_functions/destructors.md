@@ -1,3 +1,5 @@
+# Virtual Destructors
+
 In C++, a destructor is a special member function that cleans up resources or performs other cleanup tasks when an object goes out of scope or is explicitly deleted. When dealing with inheritance and pointers to base classes, it's crucial to make your base class's destructor `virtual` if you ever intend to derive from that class.
 
 Here's how you can fix this with a virtual destructor:
