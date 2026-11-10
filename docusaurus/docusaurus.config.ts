@@ -17,6 +17,18 @@ const config: Config = {
     'A guide and quick reference for C++ developers: to the point, with code examples and best practices.',
   favicon: 'img/logo.svg',
 
+  // Monospace font for code (used by --ifm-font-family-monospace in src/css/custom.css)
+  headTags: [
+    {tagName: 'link', attributes: {rel: 'preconnect', href: 'https://fonts.googleapis.com'}},
+    {
+      tagName: 'link',
+      attributes: {rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous'},
+    },
+  ],
+  stylesheets: [
+    'https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap',
+  ],
+
   // Read by the GitHub star / support buttons (src/components/SupportLinks.tsx)
   customFields: {githubRepo, repoUrl, paypalUrl},
 
@@ -111,6 +123,11 @@ const config: Config = {
       defaultMode: 'dark',
       respectPrefersColorScheme: false,
     },
+    // "On this page" list: only top-level sections (## headings), no subsections
+    tableOfContents: {
+      minHeadingLevel: 2,
+      maxHeadingLevel: 2,
+    },
     docs: {
       sidebar: {
         hideable: true,
@@ -118,7 +135,8 @@ const config: Config = {
       },
     },
     navbar: {
-      title: 'C++ Guide',
+      // Logo + "Home" link to the landing page; the docs link below carries the site name
+      title: 'Home',
       logo: {
         alt: 'C++ Guide Logo',
         src: 'img/logo.svg',
@@ -128,7 +146,7 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'guideSidebar',
           position: 'left',
-          label: 'Guide',
+          label: 'C++ Guide',
         },
         {
           type: 'search',
@@ -185,8 +203,8 @@ const config: Config = {
       copyright: `Copyright © ${new Date().getFullYear()} Benjamin Yde. Built with Docusaurus.`,
     },
     prism: {
-      theme: prismThemes.github,
-      darkTheme: prismThemes.vsDark,
+      theme: prismThemes.vsDark, // code blocks are dark in both themes (VS Code Dark+)
+      darkTheme: prismThemes.vsDark, // VS Code Dark+
       // c, cpp, json, yaml and markdown are bundled by default
       additionalLanguages: ['bash', 'cmake'],
     },

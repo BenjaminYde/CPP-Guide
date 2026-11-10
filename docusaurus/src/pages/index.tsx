@@ -5,7 +5,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 
-import {GitHubStarButton, SupportButton} from '@site/src/components/SupportLinks';
+import {GitHubStarButton, SupportButton, useSupportFields} from '@site/src/components/SupportLinks';
 
 import styles from './index.module.css';
 
@@ -116,6 +116,50 @@ function TopicCard({emoji, title, slug, description}: Topic): ReactNode {
   );
 }
 
+// Toolchain versions mirror .devcontainer/x64_ubuntu24.04/Dockerfile
+const TOOLCHAIN = ['GCC 14', 'Clang 22', 'CMake 4.4', 'clangd', 'LLDB', 'clang-format'];
+
+function DevContainerSection(): ReactNode {
+  const {repoUrl} = useSupportFields();
+  return (
+    <section className={styles.devcontainer}>
+      <div className={styles.devcontainerText}>
+        <Heading as="h2">Run every example in a DevContainer</Heading>
+        <p>
+          The guide comes with runnable C++ examples in <code>code_examples</code>. The repository
+          ships a Docker <strong>DevContainer</strong> for Visual Studio Code, so you get the same
+          ready-to-use toolchain on Windows, macOS and Linux without installing compilers yourself.
+        </p>
+        <ul className={styles.toolchain} aria-label="Included tools">
+          {TOOLCHAIN.map((tool) => (
+            <li key={tool}>{tool}</li>
+          ))}
+        </ul>
+        <div className={styles.devcontainerActions}>
+          <Link className="button button--primary" href={`${repoUrl}/tree/main/code_examples`}>
+            Browse the code examples
+          </Link>
+        </div>
+      </div>
+      <ol className={styles.steps}>
+        <li>
+          <span><strong>Install</strong> Docker and the VS Code <em>Dev Containers</em> extension.</span>
+        </li>
+        <li>
+          <span><strong>Clone</strong> the repository and open the folder in VS Code.</span>
+        </li>
+        <li>
+          <span><strong>Run</strong> <code>Dev Containers: Reopen in Container</code> and pick{' '}
+          <code>cpp_guide</code>.</span>
+        </li>
+        <li>
+          <span><strong>Build</strong> any example with CMake Tools, then run or debug it.</span>
+        </li>
+      </ol>
+    </section>
+  );
+}
+
 export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
   return (
@@ -140,6 +184,7 @@ export default function Home(): ReactNode {
             ))}
           </div>
         </section>
+        <DevContainerSection />
         <section className={styles.support}>
           <Heading as="h2">Enjoying the guide?</Heading>
           <p>

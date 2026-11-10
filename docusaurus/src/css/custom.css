@@ -19,13 +19,14 @@
   --ifm-footer-background-color: #1a1a1a;
 
   --ifm-font-family-base: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --ifm-font-family-monospace: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', ui-monospace, monospace;
+  --ifm-font-family-monospace: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --ifm-heading-font-weight: 600;
   --ifm-code-font-size: 92%;
   --ifm-global-radius: 4px;
   --ifm-code-border-radius: 3px;
 
   --ue-accent-glow: rgba(255, 122, 26, 0.18);
+  --ifm-menu-color-background-active: rgba(194, 81, 10, 0.08);
   --docusaurus-highlighted-code-line-bg: rgba(255, 122, 26, 0.14);
 }
 
@@ -88,13 +89,99 @@
 }
 
 /* ---------- Sidebar: darker panel, orange active marker ---------- */
+.theme-doc-sidebar-menu,
+.theme-doc-toc-desktop,
+.theme-doc-toc-mobile {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.85rem;
+}
+
+/* No programming ligatures: in C++, `->`, `<=`, `!=` and `::` must look like what you type */
+code,
+pre,
+kbd,
+samp,
+.theme-doc-sidebar-menu,
+.theme-doc-toc-desktop,
+.theme-doc-toc-mobile {
+  font-variant-ligatures: none;
+  font-feature-settings: 'liga' 0, 'calt' 0;
+}
 [data-theme='dark'] .theme-doc-sidebar-container {
   background: var(--ue-bg-0);
   border-right-color: var(--ue-border) !important;
 }
-.menu__link--active:not(.menu__link--sublist) {
-  box-shadow: inset 2px 0 0 var(--ifm-color-primary);
-  border-radius: 0 var(--ifm-global-radius) var(--ifm-global-radius) 0;
+
+/* Explorer-style tree: folder icons for topics/groups, file icons for pages, guide lines for nesting */
+:root {
+  --tree-guide: var(--ifm-color-emphasis-300);
+  --tree-icon-folder: var(--ifm-color-primary);
+  --tree-icon-file: var(--ifm-color-emphasis-600);
+  --tree-icon-size: 15px;
+}
+[data-theme='dark'] {
+  --tree-guide: #303030;
+  --tree-icon-file: #7a7a7a;
+}
+
+.theme-doc-sidebar-menu .menu__link::before {
+  content: '';
+  flex: none;
+  align-self: flex-start;
+  width: var(--tree-icon-size);
+  height: var(--tree-icon-size);
+  margin: 0.05em 0.6rem 0 0;
+  background-color: var(--tree-icon-file);
+  -webkit-mask: var(--tree-icon) center / contain no-repeat;
+  mask: var(--tree-icon) center / contain no-repeat;
+}
+.theme-doc-sidebar-item-link > .menu__link {
+  --tree-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z'/%3E%3Cpath d='M14 3v5h5'/%3E%3Cpath d='M9 13h6M9 17h4'/%3E%3C/svg%3E");
+}
+.theme-doc-sidebar-item-category > .menu__list-item-collapsible > .menu__link {
+  --tree-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 18V7a2 2 0 0 1 2-2h4l2 2.5h6.5a2 2 0 0 1 2 2V11'/%3E%3Cpath d='M3 18l2.5-6.2A1.5 1.5 0 0 1 6.9 11H21a.9.9 0 0 1 .85 1.2l-2.3 6.6A1.8 1.8 0 0 1 17.85 20H5a2 2 0 0 1-2-2z'/%3E%3C/svg%3E");
+}
+.theme-doc-sidebar-item-category.menu__list-item--collapsed > .menu__list-item-collapsible > .menu__link {
+  --tree-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 7a2 2 0 0 1 2-2h4l2 2.5h8a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/%3E%3C/svg%3E");
+}
+.theme-doc-sidebar-item-category > .menu__list-item-collapsible > .menu__link::before {
+  background-color: var(--tree-icon-folder);
+  opacity: 0.85;
+}
+
+/* Hierarchy: topics stand out, groups medium, pages quiet */
+.theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible > .menu__link {
+  color: var(--ifm-heading-color);
+  font-weight: 600;
+}
+.theme-doc-sidebar-item-category-level-1 + .theme-doc-sidebar-item-category-level-1 {
+  margin-top: 0.15rem;
+}
+.theme-doc-sidebar-menu .menu__list .menu__list-item-collapsible > .menu__link {
+  font-weight: 500;
+}
+.theme-doc-sidebar-item-link > .menu__link {
+  color: var(--ifm-color-content-secondary);
+}
+
+/* Nested lists hang from a guide line under the parent folder icon */
+.theme-doc-sidebar-menu .menu__list {
+  margin-left: calc(var(--ifm-menu-link-padding-horizontal) + var(--tree-icon-size) / 2);
+  padding-left: 0.3rem;
+  border-left: 1px solid var(--tree-guide);
+}
+.theme-doc-sidebar-menu .menu__list .menu__link {
+  padding-left: 0.6rem;
+}
+
+/* Active page: orange text and icon on a soft fill */
+.theme-doc-sidebar-menu .menu__link--active:not(.menu__link--sublist) {
+  color: var(--ifm-color-primary);
+  background: var(--ifm-menu-color-background-active);
+  font-weight: 600;
+}
+.theme-doc-sidebar-menu .menu__link--active:not(.menu__link--sublist)::before {
+  background-color: var(--ifm-color-primary);
 }
 .menu__link,
 .menu__caret {
@@ -111,6 +198,29 @@
 [data-theme='dark'] {
   --prism-background-color: #1b1b1b;
 }
+/* Code blocks are dark in both themes (VS Code Dark+), so light mode gets dark editor chrome too */
+:root {
+  --prism-background-color: #1e1e1e;
+}
+div[class*='codeBlockContainer'] {
+  border: 1px solid #1e1e1e;
+  box-shadow: none;
+}
+div[class*='codeBlockTitle'] {
+  background: #2d2d2d;
+  border-bottom: 1px solid #1e1e1e;
+  color: #cccccc;
+}
+html:not([data-theme='dark']) {
+  --docusaurus-highlighted-code-line-bg: rgba(255, 122, 26, 0.18);
+}
+/* Copy / word-wrap buttons sit on the dark block in both themes */
+html:not([data-theme='dark']) div[class*='codeBlockContainer'] button {
+  color: #cccccc;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
 [data-theme='dark'] div[class*='codeBlockContainer'] {
   border: 1px solid var(--ue-border);
   box-shadow: none;
@@ -120,11 +230,15 @@
   border-bottom: 1px solid var(--ue-border);
   color: #a8a8a8;
 }
+/* Inline code: light mode = deep orange on a soft orange tint (dark mode below = light orange on charcoal) */
 :not(pre) > code {
-  border: 1px solid var(--ifm-color-emphasis-200);
+  color: #9c3f08;
+  background: #fbeee4;
+  border: 1px solid #f0d5c1;
 }
 [data-theme='dark'] :not(pre) > code {
   color: #ffb27a;
+  background: var(--ifm-code-background);
   border-color: var(--ue-border-strong);
 }
 
@@ -190,7 +304,7 @@
   --ifm-footer-color: #8a8a8a;
   --ifm-footer-title-color: #d8d8d8;
   --ifm-footer-link-color: #a8a8a8;
-  --ifm-footer-link-hover-color: var(--ifm-color-primary);
+  --ifm-footer-link-hover-color: #ff7a1a;
   border-top: 1px solid #2b2b2b;
 }
 .footer--dark .footer__title {
@@ -217,4 +331,96 @@
 
 ::selection {
   background: rgba(255, 122, 26, 0.35);
+}
+
+/* ---------- Doc pages: wider reading column (Infima caps containers at 1320px) ---------- */
+.docs-wrapper {
+  --ifm-container-width-xl: 1560px;
+}
+
+/* ---------- Light mode: dark editor chrome (navbar, doc sidebar, footer) around a light page ----------
+   Re-declares the dark tokens on the chrome containers only, so everything inside
+   (links, tree icons, search box, buttons, color-mode toggle) picks up the dark palette. */
+html:not([data-theme='dark']) :is(.navbar, .navbar-sidebar, .theme-doc-sidebar-container) {
+  color-scheme: dark;
+  --ifm-color-primary: #ff7a1a;
+  --ifm-color-primary-dark: #ff6c00;
+  --ifm-color-primary-light: #ff8a37;
+  --ue-bg-0: #0f0f0f;
+  --ue-bg-1: #151515;
+  --ue-bg-2: #1c1c1c;
+  --ue-bg-3: #242424;
+  --ue-border: #2b2b2b;
+  --ue-border-strong: #3a3a3a;
+  --ue-accent-glow: rgba(255, 122, 26, 0.25);
+
+  --ifm-background-color: #151515;
+  --ifm-background-surface-color: #0f0f0f;
+  --ifm-navbar-background-color: #0f0f0f;
+  --ifm-dropdown-background-color: #242424;
+  --ifm-font-color-base: #c8c8c8;
+  --ifm-heading-color: #e8e8e8;
+  --ifm-color-content: #c8c8c8;
+  --ifm-color-content-secondary: #9a9a9a;
+  --ifm-navbar-link-color: #c8c8c8;
+  --ifm-navbar-link-hover-color: #ff7a1a;
+  --ifm-toc-border-color: #2b2b2b;
+  --ifm-hover-overlay: rgba(255, 255, 255, 0.04);
+  --ifm-color-emphasis-100: #1c1c1c;
+  --ifm-color-emphasis-200: #2b2b2b;
+  --ifm-color-emphasis-300: #3a3a3a;
+  --ifm-color-emphasis-600: #9a9a9a;
+  --ifm-color-emphasis-700: #b4b4b4;
+
+  --ifm-menu-color: #b4b4b4;
+  --ifm-menu-color-active: #ff7a1a;
+  --ifm-menu-color-background-active: rgba(255, 122, 26, 0.1);
+  --ifm-menu-color-background-hover: rgba(255, 255, 255, 0.04);
+  --ifm-menu-link-sublist-icon-filter: invert(100%) sepia(94%) saturate(17%) hue-rotate(223deg)
+    brightness(104%) contrast(98%);
+  --tree-guide: #303030;
+  --tree-icon-file: #7a7a7a;
+
+  --ifm-navbar-search-input-background-color: #242424;
+  --ifm-navbar-search-input-color: #c8c8c8;
+  --ifm-navbar-search-input-placeholder-color: #8a8a8a;
+  --ifm-navbar-search-input-icon: url('data:image/svg+xml;utf8,<svg fill="%23aaaaaa" alt="Search" height="16px" viewBox="0 0 16 16" width="16px" xmlns="http://www.w3.org/2000/svg"><path d="M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609,0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021,0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338,4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z" /></svg>');
+  --search-local-modal-background: #1c1c1c;
+  --search-local-hit-background: #242424;
+  --search-local-hit-color: #c8c8c8;
+  --search-local-muted-color: #8a8a8a;
+  --search-local-hit-shadow: none;
+}
+/* Text that only inherits a color (e.g. the theme toggle icon) must follow the dark chrome */
+html:not([data-theme='dark']) :is(.navbar, .navbar-sidebar, .theme-doc-sidebar-container) {
+  color: #c8c8c8;
+}
+html:not([data-theme='dark']) .navbar {
+  border-bottom-color: #2b2b2b;
+}
+
+/* Breadcrumb "you are here" pill: dark with orange text, like the dark theme */
+html:not([data-theme='dark']) .breadcrumbs__item--active .breadcrumbs__link {
+  background: #1c1c1c;
+  color: #ff7a1a;
+}
+html:not([data-theme='dark']) .theme-doc-sidebar-container {
+  background: #0f0f0f;
+  border-right-color: #2b2b2b !important;
+}
+html:not([data-theme='dark']) .theme-doc-sidebar-container button[class*='collapseSidebarButton'] {
+  background: #151515;
+  border-top: 1px solid #2b2b2b;
+  color: #9a9a9a;
+}
+html:not([data-theme='dark']) .theme-doc-sidebar-container button[class*='collapseSidebarButton']:hover {
+  background: #1c1c1c;
+}
+/* Collapsed-sidebar strip ("»" button) */
+html:not([data-theme='dark']) div[class*='expandButton'] {
+  background: #0f0f0f;
+  color: #9a9a9a;
+}
+html:not([data-theme='dark']) div[class*='expandButton']:hover {
+  background: #1c1c1c;
 }

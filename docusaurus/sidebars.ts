@@ -30,11 +30,11 @@ const category = (
   items,
 });
 
-/** Nested group of pages inside a top-level category. */
+/** Nested group of pages inside a top-level category. Collapsed until opened (or a page inside it is active). */
 const group = (label: string, items: Item[]): Item => ({
   type: 'category',
   label,
-  collapsed: false,
+  collapsed: true,
   items,
 });
 
