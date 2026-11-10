@@ -82,6 +82,7 @@ Explore the `📁 examples` directory for **interactive C++** code examples, eas
 - [std::function](./guide/functions/std_function.md) (C++11)
 - [std::move_only_function](./guide/functions/std_move_only_function.md) (C++23)
 - [std::invoke, invoke_result_t & invocable](./guide/functions/invoke_and_invocable.md) (C++17/20)
+- [std::predicate](./guide/functions/std_predicate.md) (C++20)
 </td>
 
 </tr>
