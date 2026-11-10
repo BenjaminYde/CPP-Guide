@@ -7,7 +7,7 @@ import remarkCodeLanguageAliases from './src/remark/codeLanguageAliases';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
-const githubRepo = 'BenjaminYde/CPlusPlus-Guide';
+const githubRepo = 'BenjaminYde/CPP-Guide';
 const repoUrl = `https://github.com/${githubRepo}`;
 const paypalUrl = 'https://paypal.me/BenjaminYde';
 
@@ -27,9 +27,9 @@ const config: Config = {
 
   // GitHub Pages deployment (https://docusaurus.io/docs/deployment#deploying-to-github-pages)
   url: 'https://benjaminyde.github.io',
-  baseUrl: '/CPlusPlus-Guide/',
+  baseUrl: '/CPP-Guide/',
   organizationName: 'BenjaminYde',
-  projectName: 'CPlusPlus-Guide',
+  projectName: 'CPP-Guide',
   trailingSlash: false,
 
   // Fail the build on any broken link, anchor or image

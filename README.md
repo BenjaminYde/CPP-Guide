@@ -4,7 +4,7 @@
 
 The CPP Guide repository is meant to be a **guide / quick reference** for C++ developers where I try to get to the point so you can spend more time programming. This guide is **Markdown**, so it is easily opened using **Visual Studio Code** or **Github**. It contains extensive documentation, code examples and best practices.
 
-📖 **Read it online** (with search): [benjaminyde.github.io/CPlusPlus-Guide](https://benjaminyde.github.io/CPlusPlus-Guide/)
+📖 **Read it online** (with search): [benjaminyde.github.io/CPP-Guide](https://benjaminyde.github.io/CPP-Guide/)
 
 ### 📝 A Note on Reading This Guide
 
@@ -20,7 +20,7 @@ The guide is also published as a [Docusaurus](https://docusaurus.io/) website, b
 
 1. Open the project in the `cpp_guide_docs` DevContainer. Dependencies are installed automatically (`npm ci`).
 2. Go into the `docusaurus` folder.
-3. Run `npm start` to start a live-reloading development server at [localhost:3000/CPlusPlus-Guide/](http://localhost:3000/CPlusPlus-Guide/).
+3. Run `npm start` to start a live-reloading development server at [localhost:3000/CPP-Guide/](http://localhost:3000/CPP-Guide/).
 4. Run `npm run build && npm run serve` to test the production build. **The search bar only works in a production build**: the search index is generated at build time, so no external search service is needed.
 
 When adding a new page, add it to the table of contents below **and** to `docusaurus/sidebars.ts`. Pages are plain Markdown (`.md`, CommonMark like GitHub); GitHub alerts such as `> [!NOTE]` are rendered as admonitions on the website.
