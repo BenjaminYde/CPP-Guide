@@ -23,10 +23,6 @@ The guide is also published as a [Docusaurus](https://docusaurus.io/) website, b
 3. Run `npm start` to start a live-reloading development server at [localhost:3000/CPP-Guide/](http://localhost:3000/CPP-Guide/).
 4. Run `npm run build && npm run serve` to test the production build. **The search bar only works in a production build**: the search index is generated at build time, so no external search service is needed.
 
-When adding a new page, add it to the table of contents below **and** to `docusaurus/sidebars.ts`. Pages are plain Markdown (`.md`, CommonMark like GitHub); GitHub alerts such as `> [!NOTE]` are rendered as admonitions on the website.
-
-The website is deployed to **GitHub Pages** by the `Deploy Docs to GitHub Pages` workflow on every push to `main` (requires *Settings → Pages → Source: GitHub Actions*). Pull requests are checked by the `Test Docs Build` workflow.
-
 ## 🗂️ Table of Contents 
 
 <table width="100%" style="border: none;">
