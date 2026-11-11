@@ -1,0 +1,135 @@
+/* Category pages: panels with tree rows, matching the sidebar (icons come from src/css/custom.css) */
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.panel {
+  padding: 0.75rem;
+  border: 1px solid var(--ue-border, var(--ifm-color-emphasis-200));
+  border-radius: var(--ifm-card-border-radius);
+  background: var(--ue-bg-2, var(--ifm-card-background-color));
+}
+
+/* ---------- Group header: open folder + title + item count ---------- */
+.groupHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--ifm-global-radius);
+  color: var(--ifm-heading-color);
+}
+
+.groupHeader:hover {
+  text-decoration: none;
+  color: var(--ifm-color-primary);
+  background: var(--ifm-menu-color-background-hover);
+}
+
+.groupHeader::before {
+  content: '';
+  flex: none;
+  width: 18px;
+  height: 18px;
+  background-color: var(--tree-icon-folder);
+  -webkit-mask: var(--icon-folder-open) center / contain no-repeat;
+  mask: var(--icon-folder-open) center / contain no-repeat;
+}
+
+.groupTitle {
+  flex: 1;
+  min-width: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* ---------- Rows ---------- */
+.entries {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.entries li {
+  margin: 0;
+}
+
+/* Rows of a group hang from a guide line under the header's folder icon */
+.nested {
+  margin: 0.25rem 0 0 calc(0.6rem + 9px);
+  padding-left: 0.5rem;
+  border-left: 1px solid var(--tree-guide);
+}
+
+.entry {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: var(--ifm-global-radius);
+  color: var(--ifm-font-color-base);
+  font-size: 0.95rem;
+  line-height: 1.3;
+  transition: background var(--ifm-transition-fast) ease, color var(--ifm-transition-fast) ease;
+}
+
+/* Zebra stripes: two row tints, both distinct from the panel background */
+.entries li > .entry {
+  background: var(--tree-row-odd);
+}
+
+.entries li:nth-child(even) > .entry {
+  background: var(--tree-row-even);
+}
+
+.entries li > .entry:hover {
+  color: var(--ifm-color-primary);
+  background: var(--ifm-menu-color-background-active);
+  text-decoration: none;
+}
+
+.entry::before {
+  content: '';
+  flex: none;
+  width: var(--tree-icon-size, 15px);
+  height: var(--tree-icon-size, 15px);
+  background-color: var(--tree-icon-file);
+  -webkit-mask: var(--entry-icon) center / contain no-repeat;
+  mask: var(--entry-icon) center / contain no-repeat;
+}
+
+.entry:hover::before {
+  background-color: var(--ifm-color-primary);
+}
+
+.file {
+  --entry-icon: var(--icon-file);
+}
+
+.folder {
+  --entry-icon: var(--icon-folder);
+}
+
+.folder::before {
+  background-color: var(--tree-icon-folder);
+  opacity: 0.85;
+}
+
+.label {
+  flex: 1;
+  min-width: 0;
+}
+
+.count {
+  flex: none;
+  font-size: 0.8rem;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  color: var(--ifm-color-emphasis-600);
+}

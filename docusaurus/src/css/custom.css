@@ -119,11 +119,19 @@ samp,
   --tree-icon-file: var(--ifm-color-emphasis-600);
   --tree-icon-size: 15px;
   --tree-caret-size: 16px;
+  /* Shared with the category page cards (src/theme/DocCardList) */
+  --icon-file: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z'/%3E%3Cpath d='M14 3v5h5'/%3E%3Cpath d='M9 13h6M9 17h4'/%3E%3C/svg%3E");
+  --icon-folder: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 7a2 2 0 0 1 2-2h4l2 2.5h8a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/%3E%3C/svg%3E");
+  --icon-folder-open: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 18V7a2 2 0 0 1 2-2h4l2 2.5h6.5a2 2 0 0 1 2 2V11'/%3E%3Cpath d='M3 18l2.5-6.2A1.5 1.5 0 0 1 6.9 11H21a.9.9 0 0 1 .85 1.2l-2.3 6.6A1.8 1.8 0 0 1 17.85 20H5a2 2 0 0 1-2-2z'/%3E%3C/svg%3E");
   --tree-row-pad: 0.4rem;
+  --tree-row-odd: rgba(0, 0, 0, 0.025);
+  --tree-row-even: rgba(0, 0, 0, 0.04);
 }
 [data-theme='dark'] {
   --tree-guide: #303030;
   --tree-icon-file: #7a7a7a;
+  --tree-row-odd: rgba(255, 255, 255, 0.025);
+  --tree-row-even: rgba(255, 255, 255, 0.04);
 }
 
 .theme-doc-sidebar-menu .menu__link::before {
@@ -138,13 +146,13 @@ samp,
   mask: var(--tree-icon) center / contain no-repeat;
 }
 .theme-doc-sidebar-item-link > .menu__link {
-  --tree-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z'/%3E%3Cpath d='M14 3v5h5'/%3E%3Cpath d='M9 13h6M9 17h4'/%3E%3C/svg%3E");
+  --tree-icon: var(--icon-file);
 }
 .theme-doc-sidebar-item-category > .menu__list-item-collapsible > .menu__link {
-  --tree-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 18V7a2 2 0 0 1 2-2h4l2 2.5h6.5a2 2 0 0 1 2 2V11'/%3E%3Cpath d='M3 18l2.5-6.2A1.5 1.5 0 0 1 6.9 11H21a.9.9 0 0 1 .85 1.2l-2.3 6.6A1.8 1.8 0 0 1 17.85 20H5a2 2 0 0 1-2-2z'/%3E%3C/svg%3E");
+  --tree-icon: var(--icon-folder-open);
 }
 .theme-doc-sidebar-item-category.menu__list-item--collapsed > .menu__list-item-collapsible > .menu__link {
-  --tree-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 7a2 2 0 0 1 2-2h4l2 2.5h8a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/%3E%3C/svg%3E");
+  --tree-icon: var(--icon-folder);
 }
 .theme-doc-sidebar-item-category > .menu__list-item-collapsible > .menu__link::before {
   background-color: var(--tree-icon-folder);

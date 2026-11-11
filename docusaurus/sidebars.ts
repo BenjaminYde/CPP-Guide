@@ -149,7 +149,7 @@ const sidebars: SidebarsConfig = {
       'oop',
       'Classes, object lifetime, copy and move semantics, inheritance and virtual functions.',
       [
-        group('General', [
+        group('Introduction', [
           doc('oop/classes_vs_structs', 'Classes vs Structs'),
           doc('oop/constructors', 'Constructors'),
           doc('oop/destructors', 'Destructors'),

@@ -109,7 +109,7 @@ The guide is also published as a [Docusaurus](https://docusaurus.io/) website, b
 <tr valign="top">
 <td width="33%" style="padding-bottom: 20px;">
 
-**General**
+**Introduction**
 
 - [Classes vs Structs](./guide/oop/classes_vs_structs.md)
 - [Constructors](./guide/oop/constructors.md)
