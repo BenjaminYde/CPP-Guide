@@ -118,6 +118,8 @@ samp,
   --tree-icon-folder: var(--ifm-color-primary);
   --tree-icon-file: var(--ifm-color-emphasis-600);
   --tree-icon-size: 15px;
+  --tree-caret-size: 16px;
+  --tree-row-pad: 0.4rem;
 }
 [data-theme='dark'] {
   --tree-guide: #303030;
@@ -164,14 +166,65 @@ samp,
   color: var(--ifm-color-content-secondary);
 }
 
-/* Nested lists hang from a guide line under the parent folder icon */
-.theme-doc-sidebar-menu .menu__list {
-  margin-left: calc(var(--ifm-menu-link-padding-horizontal) + var(--tree-icon-size) / 2);
-  padding-left: 0.3rem;
-  border-left: 1px solid var(--tree-guide);
+/* VS Code-style rows: [chevron][icon] label. Pages keep an empty chevron slot so icons line up. */
+.theme-doc-sidebar-menu .menu__caret::before,
+.theme-doc-sidebar-menu .menu__link--sublist-caret::after {
+  content: '';
+  flex: none;
+  align-self: flex-start;
+  width: var(--tree-caret-size);
+  min-width: 0;
+  height: var(--tree-caret-size);
+  margin: 0;
+  background: var(--tree-icon-file);
+  filter: none;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 3.5l4.5 4.5L6 12.5'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 3.5l4.5 4.5L6 12.5'/%3E%3C/svg%3E") center / contain no-repeat;
+  transform: rotate(90deg); /* open: points down */
+  transition: transform var(--ifm-transition-fast) ease;
 }
-.theme-doc-sidebar-menu .menu__list .menu__link {
-  padding-left: 0.6rem;
+.menu__list-item--collapsed > .menu__list-item-collapsible > .menu__caret::before,
+.menu__list-item--collapsed > .menu__list-item-collapsible > .menu__link--sublist-caret::after {
+  transform: none; /* closed: points right */
+}
+.theme-doc-sidebar-menu .menu__list-item-collapsible:hover .menu__caret::before,
+.theme-doc-sidebar-menu .menu__link--sublist-caret:hover::after {
+  background: var(--ifm-font-color-base);
+}
+
+/* Topics (category with its own page): the chevron is a separate button, moved in front of the link */
+.theme-doc-sidebar-menu .menu__caret {
+  order: -1;
+  align-items: flex-start;
+  padding: var(--ifm-menu-link-padding-vertical) 2px var(--ifm-menu-link-padding-vertical)
+    var(--tree-row-pad);
+}
+.theme-doc-sidebar-menu .menu__caret:hover {
+  background: transparent;
+}
+.theme-doc-sidebar-menu .menu__list-item-collapsible > .menu__link--sublist:not(.menu__link--sublist-caret) {
+  padding-left: 0;
+}
+
+/* Groups (category without a page): the chevron is the link's ::after, moved in front of the icon */
+.theme-doc-sidebar-menu .menu__link--sublist-caret {
+  padding-left: var(--tree-row-pad);
+}
+.theme-doc-sidebar-menu .menu__link--sublist-caret::after {
+  order: -1;
+  margin-right: 2px;
+}
+
+/* Pages: empty chevron slot */
+.theme-doc-sidebar-menu .theme-doc-sidebar-item-link > .menu__link {
+  padding-left: calc(var(--tree-row-pad) + var(--tree-caret-size) + 2px);
+}
+
+/* Nested lists hang from a guide line under the parent's chevron */
+.theme-doc-sidebar-menu .menu__list {
+  margin-left: calc(var(--tree-row-pad) + var(--tree-caret-size) / 2);
+  padding-left: 2px;
+  border-left: 1px solid var(--tree-guide);
 }
 
 /* Active page: orange text and icon on a soft fill */
