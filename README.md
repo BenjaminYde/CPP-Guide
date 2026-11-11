@@ -98,6 +98,7 @@ The guide is also published as a [Docusaurus](https://docusaurus.io/) website, b
 📐 **Templates**
 
 - [Why Templates?](./guide/templates/introduction.md)
+- [Function Templates](./guide/templates/function_templates.md)
 </td>
 
 </tr>

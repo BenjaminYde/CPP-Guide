@@ -142,7 +142,10 @@ const sidebars: SidebarsConfig = {
       'Templates',
       'templates',
       'Write code once for every type: from your first template to concepts.',
-      [doc('templates/introduction', 'Why Templates?')],
+      [
+        doc('templates/introduction', 'Why Templates?'),
+        doc('templates/function_templates', 'Function Templates'),
+      ],
     ),
     category(
       'Object Oriented Programming',
