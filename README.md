@@ -94,6 +94,10 @@ The guide is also published as a [Docusaurus](https://docusaurus.io/) website, b
 - [std::move_only_function](./guide/functions/std_move_only_function.md) (C++23)
 - [std::invoke, invoke_result_t & invocable](./guide/functions/invoke_and_invocable.md) (C++17/20)
 - [std::predicate](./guide/functions/std_predicate.md) (C++20)
+
+📐 **Templates**
+
+- [Why Templates?](./guide/templates/introduction.md)
 </td>
 
 </tr>
@@ -222,7 +226,6 @@ The guide is also published as a [Docusaurus](https://docusaurus.io/) website, b
 🚧 **Todo**
 
 - Design patterns
-- Templates
 - Error handling
 
 ## 📍 References

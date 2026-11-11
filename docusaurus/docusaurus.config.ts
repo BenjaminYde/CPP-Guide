@@ -173,6 +173,7 @@ const config: Config = {
             {label: 'Containers', to: '/guide/category/containers'},
             {label: 'Memory Management', to: '/guide/category/memory'},
             {label: 'Functions', to: '/guide/category/functions'},
+            {label: 'Templates', to: '/guide/category/templates'},
             {label: 'Object Oriented Programming', to: '/guide/category/oop'},
             {label: 'Compilation, CMake & Tooling', to: '/guide/category/tooling'},
             {label: 'Typing, Casting & ConstExpr', to: '/guide/category/typing'},

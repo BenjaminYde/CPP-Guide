@@ -43,6 +43,12 @@ const TOPICS: Topic[] = [
     description: 'Function pointers, lambdas, std::function, std::invoke and callable concepts.',
   },
   {
+    emoji: '📐',
+    title: 'Templates',
+    slug: 'templates',
+    description: 'Write code once for every type: why templates exist and how the compiler uses them.',
+  },
+  {
     emoji: '🏛️',
     title: 'Object Oriented Programming',
     slug: 'oop',
